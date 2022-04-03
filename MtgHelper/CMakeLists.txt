@@ -18,6 +18,12 @@ set(PROJECT_SOURCES
         main.cpp
         mainwindow.cpp
         mainwindow.h
+        apiconnector.cpp
+        apiconnector.h
+        card.cpp
+        card.h
+        jsonparser.cpp
+        jsonparser.h
         mainwindow.ui
 )
 

@@ -7,62 +7,32 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    networkManager = new QNetworkAccessManager(this);
-    reply = nullptr;
-    dataBuffer = new QByteArray();
+    apiConnector = new APIConnector();
 
-    connect(ui->buttonSearch,&QToolButton::pressed, this, &MainWindow::Search);
+    connect(ui->buttonSearch,   &QToolButton::pressed,          this, &MainWindow::SearchForCards);
+    connect(apiConnector,       &APIConnector::CardListRead,    this, &MainWindow::SetCardsList);
+    connect(apiConnector,       &APIConnector::CardDetailsRead, this, &MainWindow::SetCardsDetails);
 }
 
 MainWindow::~MainWindow()
 {
-    delete networkManager;
-    delete dataBuffer;
-
+    delete apiConnector;
     delete ui;
 }
 
-void MainWindow::Search()
+void MainWindow::SearchForCards()
 {
-    QNetworkRequest req{QUrl(this->url)};
-    reply = networkManager->get(req);
-    connect(reply, &QNetworkReply::readyRead, this, &MainWindow::ReadData);
-    connect(reply, &QNetworkReply::finished,  this, &MainWindow::FinishReading);
+    //TODO budowanie query
+    apiConnector->GetReply(REQUEST_CARD_LIST, "search?unique&q=c%3Agreen&name");
 }
 
-void MainWindow::ReadData()
+void MainWindow::SetCardsList(QList<Card>* cardList)
 {
-    dataBuffer->append(reply->readAll());
+    //TODO obsługa listy
+    ui->testLabel->setText(cardList->at(0).name);
 }
 
-void MainWindow::FinishReading()
+void MainWindow::SetCardsDetails(Card card)
 {
-    if(reply->error() != QNetworkReply::NoError)
-    {
-        qDebug() << "Error : " << reply->errorString();
-        //QMessageBox::warning(this,"Error",QString("Request[Error] : %1").arg(netReply->errorString()));
-    }
-    else
-    {
-
-        //CONVERT THE DATA FROM A JSON DOC TO A JSON OBJECT
-        QJsonObject userJsonInfo = QJsonDocument::fromJson(*dataBuffer).object();
-        QJsonObject card = userJsonInfo.find("card")->toObject();
-
-        //SET TEXT
-//        QString name = card.value("name").toString();
-//        QString type = card.value("type").toString();
-//        QString text = card.value("text").toString();
-
-//        ui->labelName->setText(name);
-//        ui->labelType->setText(type);
-//        ui->labelText->setText(text);
-
-        //SET PICTURE
-//        auto picLink = userJsonInfo.value("avatar_url").toString();
-//        QNetworkRequest link{QUrl(picLink)};
-//        reply = netManager->get(link);
-//        connect(reply,&QNetworkReply::finished,this,&MainWindow::setUserImage);
-        dataBuffer->clear();
-    }
+    //TODO obsługa szczegółow karty
 }
