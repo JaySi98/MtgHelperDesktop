@@ -11,6 +11,8 @@
 #include "jsonparser.h"
 #include "card.h"
 
+#define URL_TYPES_COUNT 2
+
 typedef enum
 {
     REQUEST_CARD_LIST   = 0,
@@ -26,7 +28,7 @@ public:
     explicit APIConnector(QObject* parent = nullptr);
 
 signals:
-    void CardListRead(QList<Card>* cardlist);
+    void CardListRead(QStringList);
     void CardDetailsRead(Card card);
 
 public slots:
@@ -48,14 +50,11 @@ private:
         STATUS_JSON_ERROR  = 4, // failed to parse Json
     }requestStatus;
 
-    // https://api.magicthegathering.io/v1/cards/?name=nissa&cmc=5
-    // https://api.magicthegathering.io/v1/cards/?name=avacyn
-    const QString urlMTG        = "https://api.magicthegathering.io/v1/cards/%1";
-
     // https://api.scryfall.com/cards/named?exact=nissa,worldwaker
     // https://api.scryfall.com/cards/named?fuzzy=nissa,worldwaker
     // https://api.scryfall.com/cards/search?unique&q=c%3Agreen&name
-    const QString urlScryfall   = "https://api.scryfall.com/cards/%1";
+    const QString link[URL_TYPES_COUNT]= {"https://api.scryfall.com/cards/%1",
+                                          "https://api.scryfall.com/cards/named?exact=%1"};
 
     QNetworkAccessManager networkManager;
     QByteArray data;
@@ -76,12 +75,18 @@ private:
  *      - https://api.cardmarket.com/ws/documentation
  *      - https://docs.tcgplayer.com/docs
  * TODO:
- *      - dokończyć pobieranie z api
- *      - podpiąć sygnały z api
- *      - typ wyliczeniowy co ma być pobierane
- *
- *      - zrobić wyświetlanie w liście
  *      - klasa do parsowania json
+ *      - wyświetlanie szczegółów karty
+ *
  *      - ogarnąc składnie scryfall
  *      - klasa do tworzenia query
+ *      - przejście na mobilne i QML
+ *      - lista z ikonami typów
+ *      - podpęcie bazy
+ *      - zapis kart
+ *
+ * DRUGIE API:
+ *  // https://api.magicthegathering.io/v1/cards/?name=nissa&cmc=5
+ *  // https://api.magicthegathering.io/v1/cards/?name=avacyn
+ *  const QString urlMTG        = "https://api.magicthegathering.io/v1/cards/%1";
  */

@@ -19,7 +19,8 @@ public:
 
 private slots:
     void SearchForCards();
-    void SetCardsList(QList<Card>* cardList);
+    void SearchForCardDetails();
+    void SetCardsList(QStringList);
     void SetCardsDetails(Card card);
 
 private:

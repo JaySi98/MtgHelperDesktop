@@ -10,6 +10,7 @@ MainWindow::MainWindow(QWidget *parent)
     apiConnector = new APIConnector();
 
     connect(ui->buttonSearch,   &QToolButton::pressed,          this, &MainWindow::SearchForCards);
+    connect(ui->resultList,     &QListWidget::itemPressed,      this, &MainWindow::SearchForCardDetails);
     connect(apiConnector,       &APIConnector::CardListRead,    this, &MainWindow::SetCardsList);
     connect(apiConnector,       &APIConnector::CardDetailsRead, this, &MainWindow::SetCardsDetails);
 }
@@ -26,10 +27,15 @@ void MainWindow::SearchForCards()
     apiConnector->GetReply(REQUEST_CARD_LIST, "search?unique&q=c%3Agreen&name");
 }
 
-void MainWindow::SetCardsList(QList<Card>* cardList)
+void MainWindow::SearchForCardDetails()
 {
-    //TODO obsługa listy
-    ui->testLabel->setText(cardList->at(0).name);
+    QString cardName = ui->resultList->currentItem()->text();
+    apiConnector->GetReply(REQUEST_CARD_DETAIL, cardName);
+}
+
+void MainWindow::SetCardsList(QStringList cardList)
+{
+    ui->resultList->addItems(cardList);
 }
 
 void MainWindow::SetCardsDetails(Card card)

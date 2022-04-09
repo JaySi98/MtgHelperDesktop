@@ -18,7 +18,7 @@ void APIConnector::GetReply(requestType type, QString query)
     status = STATUS_NONE;
     currentRequestType = type;
 
-    QUrl url = urlScryfall.arg(query);
+    QUrl url = link[type].arg(query);
     QNetworkReply* reply = networkManager.get(QNetworkRequest(url));
 
     connect(reply, &QNetworkReply::readyRead,     this, &APIConnector::ReadyRead);
@@ -47,7 +47,7 @@ void APIConnector::Finished(QNetworkReply* reply)
         {
             case REQUEST_CARD_LIST:
             {
-                QList<Card>* cardList = JsonParser::GetCardList(&data);
+                QStringList cardList = JsonParser::GetCardList(&data);
                 emit CardListRead(cardList);
                 break;
             }
