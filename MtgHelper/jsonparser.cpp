@@ -29,6 +29,13 @@ Card JsonParser::GetCard(QByteArray* data)
     return card;
 }
 
+QPixmap JsonParser::GetCardImage(QByteArray* data)
+{
+    QPixmap image;
+    image.loadFromData(*data);
+    return image;
+}
+
 void JsonParser::SetCardBasics(QJsonObject* jsonObject, Card* card)
 {
     card->name     = jsonObject->find("name")->toString();

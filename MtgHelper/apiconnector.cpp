@@ -61,7 +61,8 @@ void APIConnector::Finished(QNetworkReply* reply)
 
             case REQUEST_CARD_IMAGE:
             {
-
+                QPixmap image = JsonParser::GetCardImage(&data);
+                emit CardImageRead(image);
                 break;
             }
         }

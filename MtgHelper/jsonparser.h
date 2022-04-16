@@ -5,6 +5,7 @@
 #include <QJsonValue>
 #include <QJsonArray>
 #include <QJsonObject>
+#include <QPixmap>
 
 #include "card.h"
 
@@ -16,6 +17,7 @@ public:
 //    static QList<Card>* GetCardList(QByteArray* data);
     static QStringList GetCardList(QByteArray* data);
     static Card GetCard(QByteArray* data);
+    static QPixmap GetCardImage(QByteArray* data);
 
 private:
     static void SetCardBasics(QJsonObject* jsonObject, Card* card);

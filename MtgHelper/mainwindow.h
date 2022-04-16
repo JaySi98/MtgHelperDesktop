@@ -24,6 +24,7 @@ private slots:
     void SearchForCardDetails();
     void SetCardsList(QStringList);
     void SetCardsDetails(Card card);
+    void SetCardImage(QPixmap image);
 
 private:
     Ui::MainWindow *ui;

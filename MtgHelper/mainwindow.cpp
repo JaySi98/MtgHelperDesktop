@@ -7,14 +7,15 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    apiConnector = new APIConnector();
-    searchListView = new SearchListView(this);
+    apiConnector    = new APIConnector();
+    searchListView  = new SearchListView(this);
     cardDetailsView = new CardDetailsView(this);
 
     connect(ui->buttonSearch,   &QToolButton::pressed,          this, &MainWindow::SearchForCards);
     connect(ui->resultList,     &QListWidget::itemPressed,      this, &MainWindow::SearchForCardDetails);
     connect(apiConnector,       &APIConnector::CardListRead,    this, &MainWindow::SetCardsList);
     connect(apiConnector,       &APIConnector::CardDetailsRead, this, &MainWindow::SetCardsDetails);
+    connect(apiConnector,       &APIConnector::CardImageRead,   this, &MainWindow::SetCardImage);
 }
 
 MainWindow::~MainWindow()
@@ -41,12 +42,20 @@ void MainWindow::SearchForCardDetails()
 void MainWindow::SetCardsList(QStringList cardList)
 {
     //TODO lista z znaczkami typow
-
     ui->resultList->clear();
     ui->resultList->addItems(cardList);
 }
 
 void MainWindow::SetCardsDetails(Card card)
 {
+    apiConnector->GetReply(REQUEST_CARD_IMAGE, card.imageUrl);
+
     //TODO dodawanie widoku szczegółów karty
+    QWidget* widget = cardDetailsView->GetCardDetailsView(card);
+    ui->scrollArea->setWidget(widget);
+}
+
+void MainWindow::SetCardImage(QPixmap image)
+{
+    // TODO wstawianie obrazka
 }
