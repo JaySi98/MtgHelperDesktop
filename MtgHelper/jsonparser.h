@@ -18,11 +18,10 @@ public:
     static Card GetCard(QByteArray* data);
 
 private:
-    static void SetCardBasics(QByteArray* data, Card* card);
-    static void SetCardArts(QByteArray* data, Card* card);
-    static void SetCardLegalities(QByteArray* data, Card* card);
-    static void SetCardURL(QByteArray* data, Card* card);
-    static void SetCardID(QByteArray* data, Card* card);
+    static void SetCardBasics(QJsonObject* jsonObject, Card* card);
+    static void SetCardArts(QJsonObject* jsonObject, Card* card);
+    static void SetCardURL(QJsonObject* jsonObject, Card* card);
+    static void SetCardID(QJsonObject* jsonObject, Card* card);
 
 };
 

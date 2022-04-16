@@ -20,7 +20,10 @@ set(PROJECT_SOURCES
         mainwindow.h
         apiconnector.cpp
         apiconnector.h
-        card.cpp
+        searchlistview.cpp
+        searchlistview.h
+        carddetailsview.cpp
+        carddetailsview.h
         card.h
         jsonparser.cpp
         jsonparser.h

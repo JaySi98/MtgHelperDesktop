@@ -58,6 +58,12 @@ void APIConnector::Finished(QNetworkReply* reply)
                 emit CardDetailsRead(cardDetails);
                 break;
             }
+
+            case REQUEST_CARD_IMAGE:
+            {
+
+                break;
+            }
         }
     }
 

@@ -8,6 +8,8 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
 
     apiConnector = new APIConnector();
+    searchListView = new SearchListView(this);
+    cardDetailsView = new CardDetailsView(this);
 
     connect(ui->buttonSearch,   &QToolButton::pressed,          this, &MainWindow::SearchForCards);
     connect(ui->resultList,     &QListWidget::itemPressed,      this, &MainWindow::SearchForCardDetails);
@@ -18,13 +20,16 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow()
 {
     delete apiConnector;
+    delete searchListView;
+    delete cardDetailsView;
     delete ui;
 }
 
 void MainWindow::SearchForCards()
 {
     //TODO budowanie query
-    apiConnector->GetReply(REQUEST_CARD_LIST, "search?unique&q=c%3Agreen&name");
+    QString query = ui->searchLine->text();
+    apiConnector->GetReply(REQUEST_CARD_LIST, query); //"search?unique&q=c%3Agreen&name"
 }
 
 void MainWindow::SearchForCardDetails()
@@ -35,10 +40,13 @@ void MainWindow::SearchForCardDetails()
 
 void MainWindow::SetCardsList(QStringList cardList)
 {
+    //TODO lista z znaczkami typow
+
+    ui->resultList->clear();
     ui->resultList->addItems(cardList);
 }
 
 void MainWindow::SetCardsDetails(Card card)
 {
-    //TODO obsługa szczegółow karty
+    //TODO dodawanie widoku szczegółów karty
 }

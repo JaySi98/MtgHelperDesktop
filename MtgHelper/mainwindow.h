@@ -3,6 +3,8 @@
 
 #include <QMainWindow>
 #include "apiconnector.h"
+#include "carddetailsview.h"
+#include "searchlistview.h"
 #include "card.h"
 
 QT_BEGIN_NAMESPACE
@@ -26,6 +28,8 @@ private slots:
 private:
     Ui::MainWindow *ui;
     APIConnector* apiConnector;
+    SearchListView* searchListView;
+    CardDetailsView* cardDetailsView;
 };
 #endif // MAINWINDOW_H
 

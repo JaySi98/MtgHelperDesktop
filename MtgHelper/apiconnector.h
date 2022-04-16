@@ -17,6 +17,7 @@ typedef enum
 {
     REQUEST_CARD_LIST   = 0,
     REQUEST_CARD_DETAIL = 1,
+    REQUEST_CARD_IMAGE  = 2,
 }requestType;
 
 
@@ -50,10 +51,11 @@ private:
         STATUS_JSON_ERROR  = 4, // failed to parse Json
     }requestStatus;
 
-    // https://api.scryfall.com/cards/named?exact=nissa,worldwaker
-    // https://api.scryfall.com/cards/named?fuzzy=nissa,worldwaker
-    // https://api.scryfall.com/cards/search?unique&q=c%3Agreen&name
-    const QString link[URL_TYPES_COUNT]= {"https://api.scryfall.com/cards/%1",
+    // https://api.scryfall.com/cards/search?q=Ambitious%20Farmhand%20//%20Seasoned%20Cathar
+    // https://api.scryfall.com/cards/named?exact=%1
+    // https://api.scryfall.com/cards/named?fuzzy=%1
+    // https://api.scryfall.com/cards/%1
+    const QString link[URL_TYPES_COUNT]= {"https://api.scryfall.com/cards/search?q=%1",
                                           "https://api.scryfall.com/cards/named?exact=%1"};
 
     QNetworkAccessManager networkManager;
@@ -67,6 +69,7 @@ private:
 
 /*!
  * linki:
+ *
  *      - https://stackoverflow.com/questions/19822211/qt-parsing-json-using-qjsondocument-qjsonobject-qjsonarray
  *      - https://en.wikipedia.org/wiki/Percent-encoding
  *      - https://dev.to/truepadawan/qt-c-working-with-rest-api-35fe
@@ -75,7 +78,6 @@ private:
  *      - https://api.cardmarket.com/ws/documentation
  *      - https://docs.tcgplayer.com/docs
  * TODO:
- *      - klasa do parsowania json
  *      - wyświetlanie szczegółów karty
  *
  *      - ogarnąc składnie scryfall
