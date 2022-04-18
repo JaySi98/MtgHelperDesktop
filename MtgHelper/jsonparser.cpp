@@ -16,19 +16,6 @@ QStringList JsonParser::GetCardList(QByteArray* data)
     return cardList;
 }
 
-Card JsonParser::GetCard(QByteArray* data)
-{
-    QJsonObject jsonObject = QJsonDocument::fromJson(*data).object();
-    Card card;
-
-//    SetCardBasics(&jsonObject, &card);
-//    SetCardArts(&jsonObject, &card);
-//    SetCardURL(&jsonObject, &card);
-//    SetCardID(&jsonObject, &card);
-
-    return card;
-}
-
 QPixmap JsonParser::GetCardImage(QByteArray* data)
 {
     QPixmap image;
@@ -36,61 +23,110 @@ QPixmap JsonParser::GetCardImage(QByteArray* data)
     return image;
 }
 
-void JsonParser::SetCardBasics(QJsonObject* jsonObject, SideInfo* card)
+Card JsonParser::GetCard(QByteArray* data)
 {
-    card->name     = jsonObject->find("name")->toString();
-    card->text     = jsonObject->find("oracle_text")->toString();
-    card->typeLine = jsonObject->find("type_line")->toString();
-    card->manaCost = jsonObject->find("mana_cost")->toString();
+    QJsonObject jsonObject = QJsonDocument::fromJson(*data).object();
+    Card card;
+
+    SetCardBasics(&jsonObject, &card);
+    card.isDual = IsCardDual(&jsonObject);
+
+    if(card.isDual)
+        SetMultipleSideInfo(&jsonObject, &card);
+    else
+        SetSingleSideInfo(&jsonObject, &card);
+
+    return card;
+}
+
+void JsonParser::SetCardBasics(QJsonObject* jsonObject, Card* card)
+{
     card->cmc      = jsonObject->find("cmc")->toInt();
     card->setName  = jsonObject->find("set_name")->toString();
     card->rarity   = jsonObject->find("rarity")->toString();
-    card->artist   = jsonObject->find("artist")->toString();
 
-    QString power     = jsonObject->find("power")->toString();
-    QString toughness = jsonObject->find("toughness")->toString();
-    card->stats    = power + '/' + toughness;
-}
+    card->mtgoID       = jsonObject->find("mtgo_id")->toInt();
+    card->tcgPlayerID  = jsonObject->find("tcgplayer_id")->toInt();
+    card->cardMarketID = jsonObject->find("cardmarket_id")->toInt();
 
-void JsonParser::SetCardArts(QJsonObject* jsonObject, SideInfo* card)
-{
     card->reserved = jsonObject->find("reserved")->toBool();
     card->foil     = jsonObject->find("foil")->toBool();
     card->nonfoil  = jsonObject->find("nonfoil")->toBool();
     card->fullArt  = jsonObject->find("full_art")->toBool();
 }
 
-void JsonParser::SetCardURL(QJsonObject* jsonObject, SideInfo* card)
+void JsonParser::SetSingleSideInfo(QJsonObject* jsonObject, Card* card)
 {
-    card->scryfallUrl = jsonObject->find("scryfall_uri")->toString();
+    SideInfo sideInfo = GetSideInfo(jsonObject);
+    card->details.append(sideInfo);
+}
+
+void JsonParser::SetMultipleSideInfo(QJsonObject* jsonObject, Card* card)
+{
+    QJsonArray jsonArray = jsonObject->find("card_faces")->toArray();
+
+    foreach (const QJsonValue & value, jsonArray)
+    {
+        QJsonObject obj = value.toObject();
+        SideInfo sideInfo = GetSideInfo(&obj);
+        card->details.append(sideInfo);
+    }
+}
+
+SideInfo JsonParser::GetSideInfo(QJsonObject* jsonObject)
+{
+    SideInfo sideInfo;
+
+    sideInfo.typeLine = jsonObject->find("type_line")->toString();
+    sideInfo.cardType = GetCardType(sideInfo.typeLine);
+
+    sideInfo.name     = jsonObject->find("name")->toString();
+    sideInfo.text     = jsonObject->find("oracle_text")->toString();
+    sideInfo.manaCost = jsonObject->find("mana_cost")->toString();
+    sideInfo.artist   = jsonObject->find("artist")->toString();
+
+    if(sideInfo.cardType & CARD_TYPE_CREATURE)
+    {
+        QString power     = jsonObject->find("power")->toString();
+        QString toughness = jsonObject->find("toughness")->toString();
+        sideInfo.stats    = power + '/' + toughness;
+    }
+    else if(sideInfo.cardType & CARD_TYPE_PLANESWALKER)
+    {
+        sideInfo.stats = jsonObject->find("loyalty")->toString();
+    }
 
     QJsonObject imageLinks = jsonObject->find("image_uris")->toObject();
-    card->imageUrl = imageLinks.find("normal")->toString();
+    sideInfo.imageUrl = imageLinks.find("normal")->toString();
+
+    return sideInfo;
 }
 
-void JsonParser::SetCardID(QJsonObject* jsonObject, SideInfo* card)
+bool JsonParser::IsCardDual(QJsonObject* jsonObject)
 {
-    // TODO dokończyć
-    card->mtgoID       = jsonObject->find("artist")->toInt();
-    card->tcgPlayerID  = jsonObject->find("artist")->toInt();
-    card->cardMarketID = jsonObject->find("artist")->toInt();
+    return jsonObject->contains("card_faces");
 }
 
-//QList<Card>* JsonParser::GetCardList(QByteArray* data)
-//{
-//    QJsonObject jsonObject = QJsonDocument::fromJson(*data).object();
-//    QJsonArray jsonArray = jsonObject["data"].toArray();
-//    QList<Card>* cardList = new QList<Card>();
+int JsonParser::GetCardType(QString line)
+{
+    int type = CARD_TYPE_UNKNOWN;
 
-//    foreach (const QJsonValue & value, jsonArray)
-//    {
-//        QJsonObject obj = value.toObject();
-//        QString name = obj["name"].toString();
-//        QString url  = obj["uri"].toString();
+    if(line.contains(TEXT_CREATURE))
+        type |= CARD_TYPE_CREATURE;
+    if(line.contains(TEXT_ARTIFACT))
+        type |= CARD_TYPE_ARTIFACT;
+    if(line.contains(TEXT_INSTANT))
+        type |= CARD_TYPE_INSTANT;
+    if(line.contains(TEXT_SORCERY))
+        type |= CARD_TYPE_SORCERY;
+    if(line.contains(TEXT_LAND))
+        type |= CARD_TYPE_LAND;
+    if(line.contains(TEXT_ENCHANTMENT))
+        type |= CARD_TYPE_ENCHANTMENT;
+    if(line.contains(TEXT_PLANESWALKER))
+        type |= CARD_TYPE_PLANESWALKER;
+    if(line.contains(TEXT_LEGENDARY))
+        type |= CARD_TYPE_LEGENDARY;
 
-//        Card card(name, url);
-//        cardList->append(card);
-//    }
-
-//    return cardList;
-//}
+    return type;
+}

@@ -10,7 +10,7 @@ enum cardSide
     SIDE_BACK = 1
 };
 
-typedef enum
+enum cardType
 {
     CARD_TYPE_UNKNOWN  = 0x00,
     CARD_TYPE_CREATURE = 0x01,
@@ -18,11 +18,16 @@ typedef enum
     CARD_TYPE_SORCERY  = 0x04,
     CARD_TYPE_LAND     = 0x08,
     CARD_TYPE_ARTIFACT = 0x10,
-    CARD_TYPE_DUAL     = 0x20,
-}cardType;
+    CARD_TYPE_ENCHANTMENT  = 0x20,
+    CARD_TYPE_PLANESWALKER = 0x40,
+    CARD_TYPE_LEGENDARY    = 0x80,
+
+};
 
 struct SideInfo
 {
+    int cardType = CARD_TYPE_UNKNOWN;
+
     QString name;
     QString text;
     QString typeLine;
@@ -35,13 +40,13 @@ struct SideInfo
 
 struct Card
 {
-    cardType type = CARD_TYPE_UNKNOWN;
     QList<SideInfo> details;
 
     QString scryfallUrl;
     QString setName;
     QString rarity;
 
+    bool isDual;
     bool reserved;
     bool foil;
     bool nonfoil;

@@ -3,7 +3,6 @@
 
 #include <QMainWindow>
 #include "apiconnector.h"
-#include "carddetailsview.h"
 #include "card.h"
 
 QT_BEGIN_NAMESPACE
@@ -23,13 +22,18 @@ private slots:
     void SearchForCardDetails();
     void SetCardsList(QStringList);
     void SetCardsDetails(Card card);
-    void SetCardImage(QPixmap image);
 
 private:
     Ui::MainWindow *ui;
     APIConnector* apiConnector;
-    CardDetailsView* cardDetailsView;
 };
 #endif // MAINWINDOW_H
 
 
+/*
+ *  QGraphicsScene scene;
+ *  QGraphicsPixmapItem item(QPixmap::fromImage(image));
+ *  scene.addItem(&item);
+ *  ui->graphicsView->setScene(&scene);
+ *  ui->graphicsView->show();
+ */
