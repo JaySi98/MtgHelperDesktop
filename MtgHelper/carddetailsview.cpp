@@ -11,7 +11,7 @@ CardDetailsView::~CardDetailsView()
         delete currentView;
 }
 
-QWidget* CardDetailsView::GetCardDetailsView(Card card)
+QWidget* CardDetailsView::GetCardDetailsView(SideInfo card)
 {
     if(currentView)
         delete currentView;

@@ -16,7 +16,7 @@ public:
     explicit CardDetailsView(QObject* parent = nullptr);
     ~CardDetailsView();
 
-    QWidget* GetCardDetailsView(Card card);
+    QWidget* GetCardDetailsView(SideInfo card);
     void     SetCardImage(QPixmap image);
 
 private:

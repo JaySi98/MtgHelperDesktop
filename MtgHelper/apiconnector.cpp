@@ -54,7 +54,7 @@ void APIConnector::Finished(QNetworkReply* reply)
 
             case REQUEST_CARD_DETAIL:
             {
-                Card cardDetails = JsonParser::GetCard(&data);
+                CardInfo cardDetails = JsonParser::GetCard(&data);
                 emit CardDetailsRead(cardDetails);
                 break;
             }

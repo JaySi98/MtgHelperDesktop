@@ -47,11 +47,8 @@ void MainWindow::SetCardsList(QStringList cardList)
 
 void MainWindow::SetCardsDetails(Card card)
 {
-    apiConnector->GetReply(REQUEST_CARD_IMAGE, card.imageUrl);
-
     //TODO dodawanie widoku szczegółów karty
-    QWidget* widget = cardDetailsView->GetCardDetailsView(card);
-    ui->scrollArea->setWidget(widget);
+    apiConnector->GetReply(REQUEST_CARD_IMAGE, card.details.at(SIDE_FACE).imageUrl);
 }
 
 void MainWindow::SetCardImage(QPixmap image)

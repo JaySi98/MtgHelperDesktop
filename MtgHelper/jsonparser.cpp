@@ -21,10 +21,10 @@ Card JsonParser::GetCard(QByteArray* data)
     QJsonObject jsonObject = QJsonDocument::fromJson(*data).object();
     Card card;
 
-    SetCardBasics(&jsonObject, &card);
-    SetCardArts(&jsonObject, &card);
-    SetCardURL(&jsonObject, &card);
-    SetCardID(&jsonObject, &card);
+//    SetCardBasics(&jsonObject, &card);
+//    SetCardArts(&jsonObject, &card);
+//    SetCardURL(&jsonObject, &card);
+//    SetCardID(&jsonObject, &card);
 
     return card;
 }
@@ -36,11 +36,11 @@ QPixmap JsonParser::GetCardImage(QByteArray* data)
     return image;
 }
 
-void JsonParser::SetCardBasics(QJsonObject* jsonObject, Card* card)
+void JsonParser::SetCardBasics(QJsonObject* jsonObject, SideInfo* card)
 {
     card->name     = jsonObject->find("name")->toString();
     card->text     = jsonObject->find("oracle_text")->toString();
-    card->typeLine     = jsonObject->find("type_line")->toString();
+    card->typeLine = jsonObject->find("type_line")->toString();
     card->manaCost = jsonObject->find("mana_cost")->toString();
     card->cmc      = jsonObject->find("cmc")->toInt();
     card->setName  = jsonObject->find("set_name")->toString();
@@ -52,7 +52,7 @@ void JsonParser::SetCardBasics(QJsonObject* jsonObject, Card* card)
     card->stats    = power + '/' + toughness;
 }
 
-void JsonParser::SetCardArts(QJsonObject* jsonObject, Card* card)
+void JsonParser::SetCardArts(QJsonObject* jsonObject, SideInfo* card)
 {
     card->reserved = jsonObject->find("reserved")->toBool();
     card->foil     = jsonObject->find("foil")->toBool();
@@ -60,7 +60,7 @@ void JsonParser::SetCardArts(QJsonObject* jsonObject, Card* card)
     card->fullArt  = jsonObject->find("full_art")->toBool();
 }
 
-void JsonParser::SetCardURL(QJsonObject* jsonObject, Card* card)
+void JsonParser::SetCardURL(QJsonObject* jsonObject, SideInfo* card)
 {
     card->scryfallUrl = jsonObject->find("scryfall_uri")->toString();
 
@@ -68,7 +68,7 @@ void JsonParser::SetCardURL(QJsonObject* jsonObject, Card* card)
     card->imageUrl = imageLinks.find("normal")->toString();
 }
 
-void JsonParser::SetCardID(QJsonObject* jsonObject, Card* card)
+void JsonParser::SetCardID(QJsonObject* jsonObject, SideInfo* card)
 {
     // TODO dokończyć
     card->mtgoID       = jsonObject->find("artist")->toInt();

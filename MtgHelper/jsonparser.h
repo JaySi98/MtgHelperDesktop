@@ -20,10 +20,10 @@ public:
     static QPixmap GetCardImage(QByteArray* data);
 
 private:
-    static void SetCardBasics(QJsonObject* jsonObject, Card* card);
-    static void SetCardArts(QJsonObject* jsonObject, Card* card);
-    static void SetCardURL(QJsonObject* jsonObject, Card* card);
-    static void SetCardID(QJsonObject* jsonObject, Card* card);
+    static void SetCardBasics(QJsonObject* jsonObject, SideInfo* card);
+    static void SetCardArts(QJsonObject* jsonObject, SideInfo* card);
+    static void SetCardURL(QJsonObject* jsonObject, SideInfo* card);
+    static void SetCardID(QJsonObject* jsonObject, SideInfo* card);
 
 };
 

@@ -4,6 +4,12 @@
 #include <QString>
 #include <QAbstractListModel>
 
+enum cardSide
+{
+    SIDE_FACE = 0,
+    SIDE_BACK = 1
+};
+
 typedef enum
 {
     CARD_TYPE_UNKNOWN  = 0x00,
@@ -15,32 +21,36 @@ typedef enum
     CARD_TYPE_DUAL     = 0x20,
 }cardType;
 
-struct Card
+struct SideInfo
 {
-    cardType type = CARD_TYPE_UNKNOWN;
-
     QString name;
     QString text;
     QString typeLine;
     QString manaCost;
-    int cmc;
     QString stats;
+    QString imageUrl;
+    QString artist;
+};
+
+
+struct Card
+{
+    cardType type = CARD_TYPE_UNKNOWN;
+    QList<SideInfo> details;
+
+    QString scryfallUrl;
     QString setName;
     QString rarity;
-    QString artist;
 
     bool reserved;
     bool foil;
     bool nonfoil;
     bool fullArt;
 
+    int cmc;
     int mtgoID;
     int tcgPlayerID;
     int cardMarketID;
-
-    QString scryfallUrl;
-    QString imageUrl;
-
 };
 
 #endif // CARD_H
