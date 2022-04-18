@@ -20,8 +20,6 @@ set(PROJECT_SOURCES
         mainwindow.h
         apiconnector.cpp
         apiconnector.h
-        searchlistview.cpp
-        searchlistview.h
         carddetailsview.cpp
         carddetailsview.h
         card.h

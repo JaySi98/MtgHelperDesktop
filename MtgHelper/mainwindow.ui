@@ -20,45 +20,39 @@
       <property name="title">
        <string>Search list</string>
       </property>
-      <widget class="QWidget" name="layoutWidget_2">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>30</y>
-         <width>371</width>
-         <height>631</height>
-        </rect>
-       </property>
-       <layout class="QVBoxLayout" name="verticalLayout_3">
-        <property name="sizeConstraint">
-         <enum>QLayout::SetNoConstraint</enum>
-        </property>
-        <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_2">
-          <item>
-           <widget class="QLineEdit" name="searchLine"/>
-          </item>
-          <item>
-           <widget class="QToolButton" name="buttonSearch">
-            <property name="text">
-             <string>Search</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="buttonAdvanced">
-            <property name="text">
-             <string>Advanced</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </item>
-        <item>
-         <widget class="QListWidget" name="resultList"/>
-        </item>
-       </layout>
-      </widget>
+      <layout class="QHBoxLayout" name="horizontalLayout_4">
+       <item>
+        <layout class="QVBoxLayout" name="verticalLayout_3">
+         <property name="sizeConstraint">
+          <enum>QLayout::SetNoConstraint</enum>
+         </property>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_2">
+           <item>
+            <widget class="QLineEdit" name="searchLine"/>
+           </item>
+           <item>
+            <widget class="QToolButton" name="buttonSearch">
+             <property name="text">
+              <string>Search</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="buttonAdvanced">
+             <property name="text">
+              <string>Advanced</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <widget class="QListWidget" name="resultList"/>
+         </item>
+        </layout>
+       </item>
+      </layout>
      </widget>
     </item>
     <item>
@@ -66,19 +60,43 @@
       <property name="title">
        <string>Card info</string>
       </property>
-      <layout class="QVBoxLayout" name="verticalLayout">
+      <layout class="QVBoxLayout" name="verticalLayout" stretch="5,2">
        <item>
-        <widget class="QScrollArea" name="scrollArea">
+        <layout class="QHBoxLayout" name="horizontalLayout_5">
+         <item>
+          <widget class="QGraphicsView" name="graphicsView_2"/>
+         </item>
+         <item>
+          <widget class="QScrollArea" name="scrollArea">
+           <property name="widgetResizable">
+            <bool>true</bool>
+           </property>
+           <widget class="QWidget" name="scrollAreaWidgetContents">
+            <property name="geometry">
+             <rect>
+              <x>0</x>
+              <y>0</y>
+              <width>299</width>
+              <height>440</height>
+             </rect>
+            </property>
+           </widget>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <widget class="QScrollArea" name="scrollArea_2">
          <property name="widgetResizable">
           <bool>true</bool>
          </property>
-         <widget class="QWidget" name="scrollAreaWidgetContents">
+         <widget class="QWidget" name="scrollAreaWidgetContents_2">
           <property name="geometry">
            <rect>
             <x>0</x>
             <y>0</y>
             <width>608</width>
-            <height>626</height>
+            <height>176</height>
            </rect>
           </property>
          </widget>
@@ -98,18 +116,6 @@
      <height>20</height>
     </rect>
    </property>
-   <widget class="QMenu" name="menumenu">
-    <property name="title">
-     <string>Menu</string>
-    </property>
-   </widget>
-   <widget class="QMenu" name="menuSettings">
-    <property name="title">
-     <string>Settings</string>
-    </property>
-   </widget>
-   <addaction name="menumenu"/>
-   <addaction name="menuSettings"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>

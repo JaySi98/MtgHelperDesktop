@@ -40,7 +40,7 @@ void JsonParser::SetCardBasics(QJsonObject* jsonObject, Card* card)
 {
     card->name     = jsonObject->find("name")->toString();
     card->text     = jsonObject->find("oracle_text")->toString();
-    card->type     = jsonObject->find("type_line")->toString();
+    card->typeLine     = jsonObject->find("type_line")->toString();
     card->manaCost = jsonObject->find("mana_cost")->toString();
     card->cmc      = jsonObject->find("cmc")->toInt();
     card->setName  = jsonObject->find("set_name")->toString();
@@ -70,6 +70,7 @@ void JsonParser::SetCardURL(QJsonObject* jsonObject, Card* card)
 
 void JsonParser::SetCardID(QJsonObject* jsonObject, Card* card)
 {
+    // TODO dokończyć
     card->mtgoID       = jsonObject->find("artist")->toInt();
     card->tcgPlayerID  = jsonObject->find("artist")->toInt();
     card->cardMarketID = jsonObject->find("artist")->toInt();

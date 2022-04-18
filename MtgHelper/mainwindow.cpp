@@ -8,7 +8,6 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
 
     apiConnector    = new APIConnector();
-    searchListView  = new SearchListView(this);
     cardDetailsView = new CardDetailsView(this);
 
     connect(ui->buttonSearch,   &QToolButton::pressed,          this, &MainWindow::SearchForCards);
@@ -21,7 +20,6 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow()
 {
     delete apiConnector;
-    delete searchListView;
     delete cardDetailsView;
     delete ui;
 }
@@ -35,6 +33,7 @@ void MainWindow::SearchForCards()
 
 void MainWindow::SearchForCardDetails()
 {
+   //TODO poprawić wybieranie elementu
     QString cardName = ui->resultList->currentItem()->text();
     apiConnector->GetReply(REQUEST_CARD_DETAIL, cardName);
 }
@@ -58,4 +57,11 @@ void MainWindow::SetCardsDetails(Card card)
 void MainWindow::SetCardImage(QPixmap image)
 {
     // TODO wstawianie obrazka
+    cardDetailsView->SetCardImage(image);
+
+//    QGraphicsScene scene;
+//    QGraphicsPixmapItem item(QPixmap::fromImage(image));
+//    scene.addItem(&item);
+//    ui->graphicsView->setScene(&scene);
+//    ui->graphicsView->show();
 }
