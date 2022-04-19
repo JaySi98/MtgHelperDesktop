@@ -39,9 +39,11 @@ public slots:
 
 private slots:
     void ReadyRead();
-    void Finished(QNetworkReply* reply);
     void SSLError(QNetworkReply* reply, const QList<QSslError> &errors);
     void ReplyError(QNetworkReply::NetworkError errorCode);
+    void FinishedReadCardList();
+    void FinishedReadCardInfo();
+    void FinishedReadCardImage();
 
 private:
 
@@ -65,6 +67,8 @@ private:
     QByteArray data;
     requestStatus status;
     requestType currentRequestType;
+
+    Card currentCard;
 };
 
 #endif // APICONNECTOR_H
@@ -82,9 +86,9 @@ private:
  *      - https://docs.tcgplayer.com/docs
  * TODO:
  *      - wyświetlanie szczegółów karty
- *
  *      - ogarnąc składnie scryfall
  *      - klasa do tworzenia query
+ *
  *      - przejście na mobilne i QML
  *      - lista z ikonami typów
  *      - podpęcie bazy

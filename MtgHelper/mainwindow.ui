@@ -64,7 +64,7 @@
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout_5">
          <item>
-          <widget class="QGraphicsView" name="graphicsView_2"/>
+          <widget class="QGraphicsView" name="graphicsView"/>
          </item>
          <item>
           <widget class="QScrollArea" name="scrollArea">

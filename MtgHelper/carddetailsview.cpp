@@ -2,27 +2,35 @@
 
 CardDetailsView::CardDetailsView(QObject* parent): QObject(parent)
 {
-    currentView = nullptr;
+    currentCardDetails = nullptr;
+    currentCardImage = nullptr;
 }
 
 CardDetailsView::~CardDetailsView()
 {
-    if(currentView)
-        delete currentView;
+    if(currentCardDetails)
+        delete currentCardDetails;
 }
 
-QWidget* CardDetailsView::GetCardDetailsView(SideInfo card)
+QWidget* CardDetailsView::GetCardDetailsView(Card card)
 {
-    if(currentView)
-        delete currentView;
+    if(currentCardDetails)
+        delete currentCardDetails;
 
     // TODO
-    currentView = new QWidget;
+    currentCardDetails = new QWidget;
 
-    return currentView;
+    return currentCardDetails;
 }
 
-void CardDetailsView::SetCardImage(QPixmap image)
+QGraphicsScene* CardDetailsView::GetCardImage(QPixmap image)
 {
-    // TODO
+    if(currentCardImage)
+        delete currentCardImage;
+
+    currentCardImage = new QGraphicsScene();
+    QGraphicsPixmapItem item(image);
+    currentCardImage->addItem(&item);
+
+    return currentCardImage;
 }

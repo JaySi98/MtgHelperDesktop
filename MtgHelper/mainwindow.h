@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include "apiconnector.h"
 #include "card.h"
+#include "carddetailsview.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -22,10 +23,12 @@ private slots:
     void SearchForCardDetails();
     void SetCardsList(QStringList);
     void SetCardsDetails(Card card);
+    void SetCardImage(QPixmap image);
 
 private:
     Ui::MainWindow *ui;
     APIConnector* apiConnector;
+    CardDetailsView* cardDetailsView;
 };
 #endif // MAINWINDOW_H
 

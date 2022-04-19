@@ -6,6 +6,7 @@
 #include <QPixmap>
 #include <QLabel>
 #include <QGraphicsView>
+#include <QGraphicsPixmapItem>
 #include "card.h"
 
 class CardDetailsView: public QObject
@@ -16,11 +17,12 @@ public:
     explicit CardDetailsView(QObject* parent = nullptr);
     ~CardDetailsView();
 
-    QWidget* GetCardDetailsView(SideInfo card);
-    void     SetCardImage(QPixmap image);
+    QWidget* GetCardDetailsView(Card card);
+    QGraphicsScene* GetCardImage(QPixmap image);
 
 private:
-    QWidget* currentView;
+    QWidget* currentCardDetails;
+    QGraphicsScene* currentCardImage;
 
 };
 

@@ -21,6 +21,8 @@ set(PROJECT_SOURCES
         apiconnector.cpp
         apiconnector.h
         card.h
+        carddetailsview.cpp
+        carddetailsview.h
         jsonparser.cpp
         jsonparser.h
         mainwindow.ui
