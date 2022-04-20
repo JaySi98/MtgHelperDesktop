@@ -7,6 +7,7 @@
 #include <QLabel>
 #include <QGraphicsView>
 #include <QGraphicsPixmapItem>
+#include <QPlainTextEdit>
 #include "card.h"
 
 class CardDetailsView: public QObject
@@ -24,6 +25,7 @@ private:
     QWidget* currentCardDetails;
     QGraphicsScene* currentCardImage;
 
+    void buildCardDetails(Card card);
 };
 
 #endif // CARDDETAILSVIEW_H

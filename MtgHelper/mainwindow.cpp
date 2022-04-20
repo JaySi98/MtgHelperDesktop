@@ -47,15 +47,17 @@ void MainWindow::SetCardsList(QStringList cardList)
 
 void MainWindow::SetCardsDetails(Card card)
 {
-    //TODO dodawanie widoku szczegółów karty
+    apiConnector->GetReply(REQUEST_CARD_IMAGE, card.details[SIDE_FACE].imageUrl);
+
     QWidget* cardDetails = cardDetailsView->GetCardDetailsView(card);
     ui->scrollArea->setWidget(cardDetails);
 }
 
 void MainWindow::SetCardImage(QPixmap image)
 {
-    // TODO dodawanie obrazku
+
     QGraphicsScene* cardImage = cardDetailsView->GetCardImage(image);
     ui->graphicsView->setScene(cardImage);
+    ui->graphicsView->fitInView(cardImage->sceneRect(),Qt::KeepAspectRatio);
     ui->graphicsView->show();
 }

@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1039</width>
+    <width>1086</width>
     <height>729</height>
    </rect>
   </property>
@@ -14,7 +14,7 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QHBoxLayout" name="horizontalLayout" stretch="3,5">
+   <layout class="QHBoxLayout" name="horizontalLayout" stretch="3,6">
     <item>
      <widget class="QGroupBox" name="boxSearch">
       <property name="title">
@@ -60,9 +60,9 @@
       <property name="title">
        <string>Card info</string>
       </property>
-      <layout class="QVBoxLayout" name="verticalLayout" stretch="5,2">
+      <layout class="QVBoxLayout" name="verticalLayout" stretch="7,3">
        <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_5">
+        <layout class="QHBoxLayout" name="horizontalLayout_5" stretch="6,5">
          <item>
           <widget class="QGraphicsView" name="graphicsView"/>
          </item>
@@ -76,10 +76,15 @@
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>299</width>
-              <height>440</height>
+              <width>305</width>
+              <height>431</height>
              </rect>
             </property>
+            <layout class="QVBoxLayout" name="verticalLayout_2">
+             <property name="sizeConstraint">
+              <enum>QLayout::SetNoConstraint</enum>
+             </property>
+            </layout>
            </widget>
           </widget>
          </item>
@@ -95,8 +100,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>608</width>
-            <height>176</height>
+            <width>682</width>
+            <height>185</height>
            </rect>
           </property>
          </widget>
@@ -112,7 +117,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1039</width>
+     <width>1086</width>
      <height>20</height>
     </rect>
    </property>
