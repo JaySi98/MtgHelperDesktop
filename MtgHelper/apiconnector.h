@@ -13,6 +13,7 @@
 #include "card.h"
 
 #define URL_TYPES_COUNT 3
+#define MAX_CARD_LIST   348
 
 typedef enum
 {
@@ -36,6 +37,7 @@ signals:
 
 public slots:
     void GetReply(requestType type, QString query);
+    void SearchCardList(QString query);
 
 private slots:
     void ReadyRead();
@@ -59,9 +61,12 @@ private:
     // https://api.scryfall.com/cards/named?exact=%1
     // https://api.scryfall.com/cards/named?fuzzy=%1
     // https://api.scryfall.com/cards/%1
-    const QString link[URL_TYPES_COUNT]= {"https://api.scryfall.com/cards/search?q=%1",
-                                          "https://api.scryfall.com/cards/named?exact=%1",
-                                          "%1"};
+    const QString link[URL_TYPES_COUNT]=
+    {
+        "https://api.scryfall.com/cards/search?q=%1",
+        "https://api.scryfall.com/cards/named?exact=%1",
+        "%1"
+    };
 
     QNetworkAccessManager networkManager;
     QByteArray data;
@@ -69,6 +74,7 @@ private:
     requestType currentRequestType;
 
     Card currentCard;
+    QStringList cardList;
 };
 
 #endif // APICONNECTOR_H

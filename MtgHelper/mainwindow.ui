@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1086</width>
+    <width>782</width>
     <height>729</height>
    </rect>
   </property>
@@ -14,7 +14,7 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QHBoxLayout" name="horizontalLayout" stretch="3,6">
+   <layout class="QHBoxLayout" name="horizontalLayout" stretch="1,1">
     <item>
      <widget class="QGroupBox" name="boxSearch">
       <property name="title">
@@ -57,51 +57,25 @@
     </item>
     <item>
      <widget class="QGroupBox" name="boxCardInfo">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
       <property name="title">
        <string>Card info</string>
       </property>
-      <layout class="QVBoxLayout" name="verticalLayout" stretch="7,3">
+      <layout class="QVBoxLayout" name="verticalLayout">
        <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_5" stretch="6,5">
-         <item>
-          <widget class="QGraphicsView" name="graphicsView"/>
-         </item>
-         <item>
-          <widget class="QScrollArea" name="scrollArea">
-           <property name="widgetResizable">
-            <bool>true</bool>
-           </property>
-           <widget class="QWidget" name="scrollAreaWidgetContents">
-            <property name="geometry">
-             <rect>
-              <x>0</x>
-              <y>0</y>
-              <width>305</width>
-              <height>431</height>
-             </rect>
-            </property>
-            <layout class="QVBoxLayout" name="verticalLayout_2">
-             <property name="sizeConstraint">
-              <enum>QLayout::SetNoConstraint</enum>
-             </property>
-            </layout>
-           </widget>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <widget class="QScrollArea" name="scrollArea_2">
+        <widget class="QScrollArea" name="scrollArea">
          <property name="widgetResizable">
           <bool>true</bool>
          </property>
-         <widget class="QWidget" name="scrollAreaWidgetContents_2">
+         <widget class="QWidget" name="scrollAreaWidgetContents">
           <property name="geometry">
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>682</width>
-            <height>185</height>
+            <width>353</width>
+            <height>626</height>
            </rect>
           </property>
          </widget>
@@ -117,7 +91,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1086</width>
+     <width>782</width>
      <height>20</height>
     </rect>
    </property>

@@ -1,5 +1,29 @@
 #include "jsonparser.h"
 
+ QString JsonParser::GetNextPageURL(QByteArray* data)
+{
+    QJsonObject jsonObject = QJsonDocument::fromJson(*data).object();
+    QString url = jsonObject["next_page"].toString();
+
+    return url;
+}
+
+bool JsonParser::MoreThanSinglePage(QByteArray *data)
+{
+    QJsonObject jsonObject = QJsonDocument::fromJson(*data).object();
+    QJsonArray jsonArray = jsonObject["data"].toArray();
+
+    int cardsTotal = jsonObject["total_cards"].toInt();
+    int cardsOnJson = 0;
+
+    foreach (const QJsonValue & value, jsonArray)
+    {
+        ++cardsOnJson;
+    }
+
+    return (cardsTotal > cardsOnJson);
+}
+
 QStringList JsonParser::GetCardList(QByteArray* data)
 {
     QJsonObject jsonObject = QJsonDocument::fromJson(*data).object();

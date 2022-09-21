@@ -11,6 +11,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     connect(ui->buttonSearch,   &QToolButton::pressed,          this, &MainWindow::SearchForCards);
     connect(ui->resultList,     &QListWidget::itemPressed,      this, &MainWindow::SearchForCardDetails);
+
     connect(apiConnector,       &APIConnector::CardListRead,    this, &MainWindow::SetCardsList);
     connect(apiConnector,       &APIConnector::CardDetailsRead, this, &MainWindow::SetCardsDetails);
     connect(apiConnector,       &APIConnector::CardImageRead,   this, &MainWindow::SetCardImage);
@@ -29,7 +30,8 @@ void MainWindow::SearchForCards()
     ui->resultList->clear();
 
     QString query = ui->searchLine->text();
-    apiConnector->GetReply(REQUEST_CARD_LIST, query);
+//    apiConnector->GetReply(REQUEST_CARD_LIST, query);
+    apiConnector->SearchCardList(query);
 }
 
 void MainWindow::SearchForCardDetails()
@@ -56,8 +58,8 @@ void MainWindow::SetCardsDetails(Card card)
 void MainWindow::SetCardImage(QPixmap image)
 {
 
-    QGraphicsScene* cardImage = cardDetailsView->GetCardImage(image);
-    ui->graphicsView->setScene(cardImage);
-    ui->graphicsView->fitInView(cardImage->sceneRect(),Qt::KeepAspectRatio);
-    ui->graphicsView->show();
+//    QGraphicsScene* cardImage = cardDetailsView->GetCardImage(image);
+//    ui->graphicsView->setScene(cardImage);
+//    ui->graphicsView->fitInView(cardImage->sceneRect(),Qt::KeepAspectRatio);
+//    ui->graphicsView->show();
 }

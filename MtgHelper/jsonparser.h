@@ -8,7 +8,6 @@
 #include <QPixmap>
 #include "card.h"
 
-#define MAX_CARD_COUNT 100
 #define TEXT_CREATURE     "Creature"
 #define TEXT_ARTIFACT     "Artifact"
 #define TEXT_SORCERY      "Sorcery"
@@ -22,6 +21,8 @@
 class JsonParser
 {
 public:
+    static QString     GetNextPageURL(QByteArray* data);
+    static bool        MoreThanSinglePage(QByteArray* data);
     static QStringList GetCardList(QByteArray* data);
     static Card        GetCard(QByteArray* data);
     static QPixmap     GetCardImage(QByteArray* data);
