@@ -35,17 +35,8 @@ private:
     APIConnector* apiConnector;
 
     QList<QSharedPointer<Card>> cardsRememberd;
-    QSharedPointer<Card> currentCard;
-    QSharedPointer<QWidget> cardDetails;
+    QSharedPointer<Card>        currentCard;
+    QSharedPointer<QWidget>     p_card_details_view;
 
 };
 #endif // MAINWINDOW_H
-
-
-/*
- *  QGraphicsScene scene;
- *  QGraphicsPixmapItem item(QPixmap::fromImage(image));
- *  scene.addItem(&item);
- *  ui->graphicsView->setScene(&scene);
- *  ui->graphicsView->show();
- */

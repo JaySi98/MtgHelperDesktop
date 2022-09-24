@@ -11,7 +11,7 @@ MainWindow::MainWindow(QWidget *parent)
     , apiConnector(new APIConnector())
     , cardsRememberd(QList<QSharedPointer<Card>>())
     , currentCard(nullptr)
-    , cardDetails(nullptr)
+    , p_card_details_view(nullptr)
 {
     ui->setupUi(this);
 
@@ -79,13 +79,12 @@ void MainWindow::SetCardImage(QPixmap image)
 
 void MainWindow::SetCardsDetails(Card* card)
 {
+    p_card_details_view.clear();
+
     CardDetailsView cdv(this);
-    cardDetails = QSharedPointer<QWidget>(cdv.GetCardDetailsView(*card));
-//    cardDetails->deleteLater();
-
-    ui->scrollArea->setWidget(cardDetails.get());
+    p_card_details_view = QSharedPointer<QWidget>(cdv.GetCardDetailsView(*card));
+    ui->scrollArea->setWidget(p_card_details_view.get());
 }
-
 
 // statics ===========================================
 static bool cardInList(QString cardName, const QList<QSharedPointer<Card>>& cardList)
