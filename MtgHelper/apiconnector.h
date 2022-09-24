@@ -32,12 +32,14 @@ public:
 
 signals:
     void CardListRead(QStringList);
-    void CardDetailsRead(Card card);
+    void CardDetailsRead(Card* card);
     void CardImageRead(QPixmap image);
 
 public slots:
-    void GetReply(requestType type, QString query);
     void SearchCardList(QString query);
+    void SearchCardDetails(QString query);
+    void SearchCardImage(QString query);
+
 
 private slots:
     void ReadyRead();
@@ -57,10 +59,6 @@ private:
         STATUS_JSON_ERROR  = 4, // failed to parse Json
     }requestStatus;
 
-    // https://api.scryfall.com/cards/search?q=Ambitious%20Farmhand%20//%20Seasoned%20Cathar
-    // https://api.scryfall.com/cards/named?exact=%1
-    // https://api.scryfall.com/cards/named?fuzzy=%1
-    // https://api.scryfall.com/cards/%1
     const QString link[URL_TYPES_COUNT]=
     {
         "https://api.scryfall.com/cards/search?q=%1",
@@ -72,8 +70,6 @@ private:
     QByteArray data;
     requestStatus status;
     requestType currentRequestType;
-
-    Card currentCard;
     QStringList cardList;
 };
 
@@ -82,7 +78,11 @@ private:
 
 /*!
  * linki:
- *
+ *      - https://api.scryfall.com/cards/search?q=Ambitious%20Farmhand%20//%20Seasoned%20Cathar
+ *      - https://api.scryfall.com/cards/named?exact=%1
+ *      - https://api.scryfall.com/cards/named?fuzzy=%1
+ *      - https://api.scryfall.com/cards/%1
+
  *      - https://stackoverflow.com/questions/19822211/qt-parsing-json-using-qjsondocument-qjsonobject-qjsonarray
  *      - https://en.wikipedia.org/wiki/Percent-encoding
  *      - https://dev.to/truepadawan/qt-c-working-with-rest-api-35fe
@@ -90,16 +90,6 @@ private:
  *      - https://scryfall.com/docs/api
  *      - https://api.cardmarket.com/ws/documentation
  *      - https://docs.tcgplayer.com/docs
- * TODO:
- *      - wyświetlanie szczegółów karty
- *      - ogarnąc składnie scryfall
- *      - klasa do tworzenia query
- *
- *      - przejście na mobilne i QML
- *      - lista z ikonami typów
- *      - podpęcie bazy
- *      - zapis kart
- *
  * DRUGIE API:
  *  // https://api.magicthegathering.io/v1/cards/?name=nissa&cmc=5
  *  // https://api.magicthegathering.io/v1/cards/?name=avacyn

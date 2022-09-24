@@ -2,6 +2,9 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QList>
+#include <QSharedPointer>
+
 #include "apiconnector.h"
 #include "card.h"
 #include "carddetailsview.h"
@@ -19,16 +22,22 @@ public:
     ~MainWindow();
 
 private slots:
-    void SearchForCards();
-    void SearchForCardDetails();
+    void SearchButtonPressed();
+    void ListItemPressed();
+
+    void addCardToRemembered(Card* card);
     void SetCardsList(QStringList);
-    void SetCardsDetails(Card card);
+    void SetCardsDetails(Card* card);
     void SetCardImage(QPixmap image);
 
 private:
     Ui::MainWindow *ui;
     APIConnector* apiConnector;
-    CardDetailsView* cardDetailsView;
+
+    QList<QSharedPointer<Card>> cardsRememberd;
+    QSharedPointer<Card> currentCard;
+    QSharedPointer<QWidget> cardDetails;
+
 };
 #endif // MAINWINDOW_H
 

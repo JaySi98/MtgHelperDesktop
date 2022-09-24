@@ -19,6 +19,32 @@ void APIConnector::SearchCardList(QString query)
     connect(reply, &QNetworkReply::errorOccurred, this, &APIConnector::ReplyError);
 }
 
+void APIConnector::SearchCardDetails(QString query)
+{
+    status = STATUS_NONE;
+    currentRequestType = REQUEST_CARD_DETAIL;
+
+    QUrl url = link[currentRequestType].arg(query);
+    QNetworkReply* reply = networkManager.get(QNetworkRequest(url));
+
+    connect(reply, &QNetworkReply::finished,      this, &APIConnector::FinishedReadCardInfo);
+    connect(reply, &QNetworkReply::readyRead,     this, &APIConnector::ReadyRead);
+    connect(reply, &QNetworkReply::errorOccurred, this, &APIConnector::ReplyError);
+}
+
+void APIConnector::SearchCardImage(QString query)
+{
+    status = STATUS_NONE;
+    currentRequestType = REQUEST_CARD_IMAGE;
+
+    QUrl url = link[REQUEST_CARD_IMAGE].arg(query);
+    QNetworkReply* reply = networkManager.get(QNetworkRequest(url));
+
+    connect(reply, &QNetworkReply::finished,      this, &APIConnector::FinishedReadCardImage);
+    connect(reply, &QNetworkReply::readyRead,     this, &APIConnector::ReadyRead);
+    connect(reply, &QNetworkReply::errorOccurred, this, &APIConnector::ReplyError);
+}
+
 void APIConnector::FinishedReadCardList()
 {
     if(status == STATUS_OK)
@@ -34,6 +60,33 @@ void APIConnector::FinishedReadCardList()
     }
     else
         cardList.clear();
+
+    data.clear();
+    QNetworkReply* reply = qobject_cast<QNetworkReply*>(sender());
+    reply->deleteLater();
+}
+
+
+void APIConnector::FinishedReadCardInfo()
+{
+    if(status == STATUS_OK)
+    {
+        Card* cardDetails = JsonParser::GetCard(&data);
+        emit CardDetailsRead(cardDetails);
+    }
+
+    data.clear();
+    QNetworkReply* reply = qobject_cast<QNetworkReply*>(sender());
+    reply->deleteLater();
+}
+
+void APIConnector::FinishedReadCardImage()
+{
+    if(status == STATUS_OK)
+    {
+        QPixmap image = JsonParser::GetCardImage(&data);
+        emit CardImageRead(image);
+    }
 
     data.clear();
     QNetworkReply* reply = qobject_cast<QNetworkReply*>(sender());
@@ -73,52 +126,3 @@ void APIConnector::ReplyError(QNetworkReply::NetworkError errorCode)
         // TODO logi
     }
 }
-
-void APIConnector::GetReply(requestType type, QString query)
-{
-    status = STATUS_NONE;
-    currentRequestType = type;
-
-    QUrl url = link[type].arg(query);
-    QNetworkReply* reply = networkManager.get(QNetworkRequest(url));
-
-    switch(type)
-    {
-        case REQUEST_CARD_LIST:   connect(reply, &QNetworkReply::finished, this, &APIConnector::FinishedReadCardList); break;
-        case REQUEST_CARD_DETAIL: connect(reply, &QNetworkReply::finished, this, &APIConnector::FinishedReadCardInfo); break;
-        case REQUEST_CARD_IMAGE:  connect(reply, &QNetworkReply::finished, this, &APIConnector::FinishedReadCardImage);break;
-    }
-
-    connect(reply, &QNetworkReply::readyRead,     this, &APIConnector::ReadyRead);
-    connect(reply, &QNetworkReply::errorOccurred, this, &APIConnector::ReplyError);
-}
-
-void APIConnector::FinishedReadCardInfo()
-{
-    if(status == STATUS_OK)
-    {
-        // TODO wyjątki
-        Card cardDetails = JsonParser::GetCard(&data);
-        emit CardDetailsRead(cardDetails);
-    }
-
-    data.clear();
-    QNetworkReply* reply = qobject_cast<QNetworkReply*>(sender());
-    reply->deleteLater();            
-}
-
-void APIConnector::FinishedReadCardImage()
-{
-    if(status == STATUS_OK)
-    {
-        // TODO wyjątki
-        QPixmap image = JsonParser::GetCardImage(&data);
-        emit CardImageRead(image);
-    }
-
-    data.clear();
-    QNetworkReply* reply = qobject_cast<QNetworkReply*>(sender());
-    reply->deleteLater();
-}
-
-

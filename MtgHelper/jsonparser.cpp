@@ -47,18 +47,18 @@ QPixmap JsonParser::GetCardImage(QByteArray* data)
     return image;
 }
 
-Card JsonParser::GetCard(QByteArray* data)
+Card* JsonParser::GetCard(QByteArray* data)
 {
     QJsonObject jsonObject = QJsonDocument::fromJson(*data).object();
-    Card card;
+    Card* card = new Card();
 
-    SetCardBasics(&jsonObject, &card);
-    card.isDual = IsCardDual(&jsonObject);
+    SetCardBasics(&jsonObject, card);
+    card->isDual = IsCardDual(&jsonObject);
 
-    if(card.isDual)
-        SetMultipleSideInfo(&jsonObject, &card);
+    if(card->isDual)
+        SetMultipleSideInfo(&jsonObject, card);
     else
-        SetSingleSideInfo(&jsonObject, &card);
+        SetSingleSideInfo(&jsonObject, card);
 
     return card;
 }

@@ -1,65 +1,111 @@
+#include <QSharedPointer>
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
+
+static bool cardInList(QString cardName, const QList<QSharedPointer<Card>>& cardList);
+static QSharedPointer<Card> getCardFromListByName(QString cardName, const QList<QSharedPointer<Card>>& cardList);
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
+    , apiConnector(new APIConnector())
+    , cardsRememberd(QList<QSharedPointer<Card>>())
+    , currentCard(nullptr)
+    , cardDetails(nullptr)
 {
     ui->setupUi(this);
-    apiConnector = new APIConnector();
-    cardDetailsView = new CardDetailsView(this);
 
-    connect(ui->buttonSearch,   &QToolButton::pressed,          this, &MainWindow::SearchForCards);
-    connect(ui->resultList,     &QListWidget::itemPressed,      this, &MainWindow::SearchForCardDetails);
+    connect(ui->buttonSearch,   &QToolButton::pressed,          this, &MainWindow::SearchButtonPressed);
+    connect(ui->resultList,     &QListWidget::itemPressed,      this, &MainWindow::ListItemPressed);
 
     connect(apiConnector,       &APIConnector::CardListRead,    this, &MainWindow::SetCardsList);
-    connect(apiConnector,       &APIConnector::CardDetailsRead, this, &MainWindow::SetCardsDetails);
+    connect(apiConnector,       &APIConnector::CardDetailsRead, this, &MainWindow::addCardToRemembered);
     connect(apiConnector,       &APIConnector::CardImageRead,   this, &MainWindow::SetCardImage);
 }
 
 MainWindow::~MainWindow()
 {
     delete apiConnector;
-    delete cardDetailsView;
     delete ui;
 }
 
-void MainWindow::SearchForCards()
+// slots ===========================================
+void MainWindow::SearchButtonPressed()
 {
-    //TODO budowanie query
     ui->resultList->clear();
+    cardsRememberd.clear();
+    currentCard = nullptr;
+    qDebug() << "SearchButtonPressed: cardsRememberd.count = " << cardsRememberd.count();
 
     QString query = ui->searchLine->text();
-//    apiConnector->GetReply(REQUEST_CARD_LIST, query);
     apiConnector->SearchCardList(query);
 }
 
-void MainWindow::SearchForCardDetails()
+void MainWindow::ListItemPressed()
 {
-   //TODO poprawić wybieranie elementu
     QString cardName = ui->resultList->currentItem()->text();
-    apiConnector->GetReply(REQUEST_CARD_DETAIL, cardName);
+
+    if(cardInList(cardName, this->cardsRememberd))
+    {
+        currentCard = getCardFromListByName(cardName, this->cardsRememberd);
+        SetCardsDetails(currentCard.get());
+    }
+    else
+    {
+        apiConnector->SearchCardDetails(cardName);
+    }
+}
+
+void MainWindow::addCardToRemembered(Card *card)
+{
+    QSharedPointer<Card> pCard = QSharedPointer<Card>(card);
+    cardsRememberd.append(pCard);
+    currentCard = pCard;
+    qDebug() << "addCardToRemembered: cardsRememberd.count = " << cardsRememberd.count();
+
+    apiConnector->SearchCardImage(currentCard.get()->details[SIDE_FACE].imageUrl);
 }
 
 void MainWindow::SetCardsList(QStringList cardList)
 {
-    //TODO lista z znaczkami typow
     ui->resultList->addItems(cardList);
-}
-
-void MainWindow::SetCardsDetails(Card card)
-{
-    apiConnector->GetReply(REQUEST_CARD_IMAGE, card.details[SIDE_FACE].imageUrl);
-
-    QWidget* cardDetails = cardDetailsView->GetCardDetailsView(card);
-    ui->scrollArea->setWidget(cardDetails);
 }
 
 void MainWindow::SetCardImage(QPixmap image)
 {
+    currentCard.get()->details[SIDE_FACE].image = image;
+    SetCardsDetails(currentCard.get());
+}
 
-//    QGraphicsScene* cardImage = cardDetailsView->GetCardImage(image);
-//    ui->graphicsView->setScene(cardImage);
-//    ui->graphicsView->fitInView(cardImage->sceneRect(),Qt::KeepAspectRatio);
-//    ui->graphicsView->show();
+void MainWindow::SetCardsDetails(Card* card)
+{
+    CardDetailsView cdv(this);
+    cardDetails = QSharedPointer<QWidget>(cdv.GetCardDetailsView(*card));
+//    cardDetails->deleteLater();
+
+    ui->scrollArea->setWidget(cardDetails.get());
+}
+
+
+// statics ===========================================
+static bool cardInList(QString cardName, const QList<QSharedPointer<Card>>& cardList)
+{
+    foreach(QSharedPointer<Card> card, cardList)
+    {
+        if(card.get()->details[0].name.compare(cardName) == 0)
+            return true;
+    }
+
+    return false;
+}
+
+static QSharedPointer<Card> getCardFromListByName(QString cardName, const QList<QSharedPointer<Card>>& cardList)
+{
+    foreach(QSharedPointer<Card> card, cardList)
+    {
+        if(card.get()->details[0].name.compare(cardName) == 0)
+            return card;
+    }
+
+    throw std::out_of_range("no card in list");
 }

@@ -24,7 +24,7 @@ public:
     static QString     GetNextPageURL(QByteArray* data);
     static bool        MoreThanSinglePage(QByteArray* data);
     static QStringList GetCardList(QByteArray* data);
-    static Card        GetCard(QByteArray* data);
+    static Card*       GetCard(QByteArray* data);
     static QPixmap     GetCardImage(QByteArray* data);
 
 private:

@@ -3,6 +3,7 @@
 
 #include <QString>
 #include <QAbstractListModel>
+#include <QPixmap>
 
 enum cardSide
 {
@@ -21,7 +22,6 @@ enum cardType
     CARD_TYPE_ENCHANTMENT  = 0x20,
     CARD_TYPE_PLANESWALKER = 0x40,
     CARD_TYPE_LEGENDARY    = 0x80,
-
 };
 
 struct SideInfo
@@ -35,6 +35,8 @@ struct SideInfo
     QString stats;
     QString imageUrl;
     QString artist;
+
+    QPixmap image;
 };
 
 

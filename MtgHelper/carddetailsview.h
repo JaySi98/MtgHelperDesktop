@@ -19,13 +19,6 @@ public:
     ~CardDetailsView();
 
     QWidget* GetCardDetailsView(Card card);
-    QGraphicsScene* GetCardImage(QPixmap image);
-
-private:
-    QWidget* currentCardDetails;
-    QGraphicsScene* currentCardImage;
-
-    void buildCardDetails(Card card);
 };
 
 #endif // CARDDETAILSVIEW_H
