@@ -113,8 +113,20 @@
      <height>20</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menu_menu">
+    <property name="title">
+     <string>Menu</string>
+    </property>
+    <addaction name="action_search_cards"/>
+   </widget>
+   <addaction name="menu_menu"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
+  <action name="action_search_cards">
+   <property name="text">
+    <string>Search Cards</string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections/>

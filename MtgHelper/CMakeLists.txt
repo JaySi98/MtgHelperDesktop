@@ -25,6 +25,10 @@ set(PROJECT_SOURCES
         carddetailsview.h
         jsonparser.cpp
         jsonparser.h
+        View.h
+        View.cpp
+        ViewCardSearch.h
+        ViewCardSearch.cpp
         mainwindow.ui
 )
 

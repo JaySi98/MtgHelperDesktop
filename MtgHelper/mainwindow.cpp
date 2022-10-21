@@ -13,14 +13,21 @@ MainWindow::MainWindow(QWidget *parent)
     , currentCard(nullptr)
     , p_card_details_view(nullptr)
 {
+    view_list = QList<QSharedPointer<View>>
+    {
+        QSharedPointer<ViewCardSearch>(new ViewCardSearch(this, "Card Search")),
+    };
+
+
     ui->setupUi(this);
 
     connect(ui->buttonSearch,   &QToolButton::pressed,          this, &MainWindow::SearchButtonPressed);
     connect(ui->resultList,     &QListWidget::itemPressed,      this, &MainWindow::ListItemPressed);
-
     connect(apiConnector,       &APIConnector::CardListRead,    this, &MainWindow::SetCardsList);
     connect(apiConnector,       &APIConnector::CardDetailsRead, this, &MainWindow::addCardToRemembered);
     connect(apiConnector,       &APIConnector::CardImageRead,   this, &MainWindow::SetCardImage);
+
+    connect(ui->action_search_cards,  &QAction::triggered,     this, &MainWindow::set_card_serch_view);
 }
 
 MainWindow::~MainWindow()
@@ -75,6 +82,11 @@ void MainWindow::SetCardImage(QPixmap image)
 {
     currentCard.get()->details[SIDE_FACE].image = image;
     SetCardsDetails(currentCard.get());
+}
+
+void MainWindow::set_card_serch_view()
+{
+    setCentralWidget(view_list.at(0)->get_widget());
 }
 
 void MainWindow::SetCardsDetails(Card* card)
