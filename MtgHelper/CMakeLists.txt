@@ -15,21 +15,24 @@ find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets Network REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets Network REQUIRED)
 
 set(PROJECT_SOURCES
-        main.cpp
-        mainwindow.cpp
-        mainwindow.h
-        apiconnector.cpp
-        apiconnector.h
-        card.h
-        carddetailsview.cpp
-        carddetailsview.h
-        jsonparser.cpp
-        jsonparser.h
-        View.h
-        View.cpp
-        ViewCardSearch.h
-        ViewCardSearch.cpp
-        mainwindow.ui
+    main.cpp
+    mainwindow.cpp
+    mainwindow.h
+    mainwindow.ui
+    
+    Api/apiconnector.cpp
+    Api/apiconnector.h
+    Api/jsonparser.cpp
+    Api/jsonparser.h
+
+    Views/View.h
+    Views/View.cpp
+    Views/ViewCardSearch.h
+    Views/ViewCardSearch.cpp
+
+    card.h
+    carddetailsview.cpp
+    carddetailsview.h
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)

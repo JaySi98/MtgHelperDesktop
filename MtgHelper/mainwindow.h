@@ -5,10 +5,10 @@
 #include <QList>
 #include <QSharedPointer>
 
-#include "apiconnector.h"
+#include <Api/apiconnector.h>
+#include <Views/ViewCardSearch.h>
 #include "card.h"
 #include "carddetailsview.h"
-#include <ViewCardSearch.h>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }

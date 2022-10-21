@@ -15,7 +15,7 @@ MainWindow::MainWindow(QWidget *parent)
 {
     view_list = QList<QSharedPointer<View>>
     {
-        QSharedPointer<ViewCardSearch>(new ViewCardSearch(this, "Card Search")),
+        QSharedPointer<ViewCardSearch>(new ViewCardSearch(this)),
     };
 
 

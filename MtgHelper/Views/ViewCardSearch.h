@@ -5,7 +5,7 @@
 #include <QPushButton>
 #include <QGroupBox>
 #include <QLayout>
-#include <View.h>
+#include <Views/View.h>
 
 class ViewCardSearch : public View
 {
