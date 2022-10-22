@@ -9,10 +9,11 @@
 #include <QListWidget>
 #include <QScrollArea>
 #include <QSharedPointer>
+#include <QLabel>
+#include <QPlainTextEdit>
 #include <Views/View.h>
 #include <Controllers/ControllerCardSearch.h>
 #include <card.h>
-#include <carddetailsview.h>
 
 class ViewCardSearch : public View
 {

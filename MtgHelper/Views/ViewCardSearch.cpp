@@ -15,6 +15,7 @@ ViewCardSearch::ViewCardSearch(QObject *parent)
 
 ViewCardSearch::~ViewCardSearch()
 {
+    card_details.clear();
     delete main_widget;
 }
 

@@ -26,8 +26,8 @@ public slots:
 
 private:
     QSharedPointer<APIConnector> api_connector;
-    QList<QSharedPointer<Card>>  card_list;     // cards already displayed
     QSharedPointer<Card>         current_card;
+    QList<QSharedPointer<Card>>  card_list;     // cards already displayed
 
     bool card_already_displayed(QString card_name);
     QSharedPointer<Card> get_card(QString card_name);

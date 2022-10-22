@@ -11,7 +11,6 @@ ControllerCardSearch::ControllerCardSearch(QObject *parent)
    connect(api_connector.get(), &APIConnector::CardImageRead,   this, &ControllerCardSearch::set_card_image);
 }
 
-
 void ControllerCardSearch::get_card_list(QString query)
 {
     card_list.clear();
