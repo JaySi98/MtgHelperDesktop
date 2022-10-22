@@ -30,9 +30,10 @@ set(PROJECT_SOURCES
     Views/ViewCardSearch.h
     Views/ViewCardSearch.cpp
 
+    Controllers/ControllerCardSearch.h
+    Controllers/ControllerCardSearch.cpp
+
     card.h
-    carddetailsview.cpp
-    carddetailsview.h
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)

@@ -8,7 +8,11 @@
 #include <QLineEdit>
 #include <QListWidget>
 #include <QScrollArea>
+#include <QSharedPointer>
 #include <Views/View.h>
+#include <Controllers/ControllerCardSearch.h>
+#include <card.h>
+#include <carddetailsview.h>
 
 class ViewCardSearch : public View
 {
@@ -17,16 +21,23 @@ public:
     explicit ViewCardSearch(QObject *parent = nullptr);
     ~ViewCardSearch();
 
+signals:
+    void card_list_request(QString query);
+    void card_details_request(QString card_name);
+
 public slots:
     void button_search_pressed();
     void button_advanced_pressed();
+    void list_item_pressed();
+    
+    void set_card_list(QStringList card_list);
+    void set_card_details(Card* card);
 
 private:
     QHBoxLayout* central_layout;
     QHBoxLayout* button_layout;
     QVBoxLayout* list_layout;
     QVBoxLayout* info_layout;
-
     QPushButton* button_search;
     QPushButton* button_advanced;
     QGroupBox*   box_card_search;
@@ -35,7 +46,11 @@ private:
     QListWidget* list_widget;
     QLineEdit*   search_line;
 
-    void create_widgets();
+    QSharedPointer<ControllerCardSearch> controller;
+    QSharedPointer<QWidget> card_details;
+
+    void     create_main_widget();
+    QWidget* create_card_details_widget(Card* card);
 };
 
 #endif // VIEWCARDSEARCH_H

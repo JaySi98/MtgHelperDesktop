@@ -2,8 +2,15 @@
 
 ViewCardSearch::ViewCardSearch(QObject *parent)
     : View{parent}
+    , controller(QSharedPointer<ControllerCardSearch>(new ControllerCardSearch()))
+    , card_details(nullptr)
 {
-    create_widgets();
+    connect(controller.get(), &ControllerCardSearch::card_list_fetched,    this,              &ViewCardSearch::set_card_list);
+    connect(controller.get(), &ControllerCardSearch::card_details_fetched, this,              &ViewCardSearch::set_card_details);
+    connect(this,             &ViewCardSearch::card_list_request,          controller.get(),  &ControllerCardSearch::get_card_list);
+    connect(this,             &ViewCardSearch::card_details_request,       controller.get(),  &ControllerCardSearch::get_card_details);
+
+    create_main_widget();
 }
 
 ViewCardSearch::~ViewCardSearch()
@@ -13,7 +20,10 @@ ViewCardSearch::~ViewCardSearch()
 
 void ViewCardSearch::button_search_pressed()
 {
-    // TODO
+    list_widget->clear();
+    QString query = search_line->text();
+
+    emit card_list_request(query);
 }
 
 void ViewCardSearch::button_advanced_pressed()
@@ -21,7 +31,25 @@ void ViewCardSearch::button_advanced_pressed()
     // TODO
 }
 
-void ViewCardSearch::create_widgets()
+void ViewCardSearch::list_item_pressed()
+{
+    QString card_name = list_widget->currentItem()->text();
+    emit card_details_request(card_name);
+}
+
+void ViewCardSearch::set_card_list(QStringList card_list)
+{
+    list_widget->addItems(card_list);
+}
+
+void ViewCardSearch::set_card_details(Card* card)
+{
+    card_details.clear();
+    card_details = QSharedPointer<QWidget>(create_card_details_widget(card));
+    info_scroll_area->setWidget(card_details.get());
+}
+
+void ViewCardSearch::create_main_widget()
 {
     // widgets setup
     button_search = new QPushButton(main_widget);
@@ -38,8 +66,10 @@ void ViewCardSearch::create_widgets()
     box_card_info = new QGroupBox(main_widget);
     box_card_info->setTitle("Card Info");
 
-    info_scroll_area = new QScrollArea(main_widget);
     list_widget = new QListWidget(main_widget);
+    connect(list_widget, &QListWidget::itemPressed, this, &ViewCardSearch::list_item_pressed);
+
+    info_scroll_area = new QScrollArea(main_widget);
     search_line = new QLineEdit(main_widget);
 
     // layout setup
@@ -62,4 +92,32 @@ void ViewCardSearch::create_widgets()
     central_layout->addWidget(box_card_info);
     central_layout->setStretch(0,4);
     central_layout->setStretch(1,6);
+}
+
+QWidget* ViewCardSearch::create_card_details_widget(Card* card)
+{
+    QWidget* card_details_widget = new QWidget;
+
+    QLabel* card_image = new QLabel(card_details_widget);
+    card_image->setPixmap(card->details[SIDE_FACE].image);
+
+    QVBoxLayout* main_layout = new QVBoxLayout(card_details_widget);
+    main_layout->addWidget(card_image);
+    main_layout->addWidget(new QLabel(card->details[SIDE_FACE].name, card_details_widget));
+    main_layout->addWidget(new QLabel(card->details[SIDE_FACE].typeLine, card_details_widget));
+    main_layout->addWidget(new QLabel(card->details[SIDE_FACE].manaCost, card_details_widget));
+
+    QPlainTextEdit* card_text = new QPlainTextEdit(card_details_widget);
+    card_text->appendPlainText(card->details[SIDE_FACE].text);
+    card_text->setReadOnly(true);
+    card_text->setSizePolicy(QSizePolicy::Minimum,QSizePolicy::Minimum);
+    main_layout->addWidget(card_text);
+
+    if(card->details[SIDE_FACE].cardType & CARD_TYPE_CREATURE || card->details[SIDE_FACE].cardType & CARD_TYPE_PLANESWALKER )
+        main_layout->addWidget(new QLabel(card->details[SIDE_FACE].stats, card_details_widget));
+
+    main_layout->addWidget(new QLabel(card->rarity, card_details_widget));
+    main_layout->addWidget(new QLabel(card->setName, card_details_widget));
+
+    return card_details_widget;
 }
