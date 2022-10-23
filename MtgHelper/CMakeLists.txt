@@ -24,6 +24,8 @@ set(PROJECT_SOURCES
     Api/apiconnector.h
     Api/jsonparser.cpp
     Api/jsonparser.h
+    Api/Card.h
+    Api/Card.cpp
 
     Views/View.h
     Views/View.cpp
@@ -33,7 +35,7 @@ set(PROJECT_SOURCES
     Controllers/ControllerCardSearch.h
     Controllers/ControllerCardSearch.cpp
 
-    card.h
+
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)

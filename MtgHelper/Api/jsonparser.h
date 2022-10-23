@@ -6,7 +6,7 @@
 #include <QJsonArray>
 #include <QJsonObject>
 #include <QPixmap>
-#include "card.h"
+#include <Api/Card.h>
 
 #define TEXT_CREATURE     "Creature"
 #define TEXT_ARTIFACT     "Artifact"

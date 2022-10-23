@@ -6,7 +6,7 @@
 #include <QSharedPointer>
 #include <QStringList>
 #include <Api/apiconnector.h>
-#include <card.h>
+#include <Api/Card.h>
 
 class ControllerCardSearch : public QObject
 {

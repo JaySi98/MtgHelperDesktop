@@ -9,8 +9,9 @@
 #include <QNetworkProxy>
 #include <QPixmap>
 
+#include <Api/Card.h>
 #include "jsonparser.h"
-#include "card.h"
+
 
 #define URL_TYPES_COUNT 3
 #define MAX_CARD_LIST   348

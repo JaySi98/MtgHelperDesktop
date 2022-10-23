@@ -13,7 +13,7 @@
 #include <QPlainTextEdit>
 #include <Views/View.h>
 #include <Controllers/ControllerCardSearch.h>
-#include <card.h>
+#include <Api/Card.h>
 
 class ViewCardSearch : public View
 {

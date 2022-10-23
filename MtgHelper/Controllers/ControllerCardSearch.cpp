@@ -37,12 +37,12 @@ void ControllerCardSearch::set_card_details(Card* card)
     card_list.append(pCard);
     current_card = pCard;
 
-    api_connector->SearchCardImage(current_card.get()->details[SIDE_FACE].imageUrl);
+    api_connector->SearchCardImage(current_card.get()->get_image_url(SIDE_FACE)); //details[SIDE_FACE].imageUrl);
 }
 
 void ControllerCardSearch::set_card_image(QPixmap image)
 {
-    current_card.get()->details[SIDE_FACE].image = image;
+    current_card.get()->set_image(SIDE_FACE, image); //details[SIDE_FACE].image = image;
     emit card_details_fetched(current_card.get());
 }
 

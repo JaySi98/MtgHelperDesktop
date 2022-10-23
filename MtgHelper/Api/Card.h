@@ -58,6 +58,10 @@ struct Card
     int mtgoID;
     int tcgPlayerID;
     int cardMarketID;
+
+    void    set_image(int side, QPixmap image);
+    QPixmap get_image(int side);
+    QString get_image_url(int side);
 };
 
 #endif // CARD_H

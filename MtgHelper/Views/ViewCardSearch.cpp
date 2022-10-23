@@ -100,25 +100,22 @@ QWidget* ViewCardSearch::create_card_details_widget(Card* card)
     QWidget* card_details_widget = new QWidget;
 
     QLabel* card_image = new QLabel(card_details_widget);
-    card_image->setPixmap(card->details[SIDE_FACE].image);
+    card_image->setPixmap(card->get_image(SIDE_FACE)); //details[SIDE_FACE].image);
+
+    QPushButton* button_flip = new QPushButton(card_details_widget);
+    button_flip->setText("Flip");
+
+    QPushButton* button_set_tag = new QPushButton(card_details_widget);
+    button_set_tag->setText("Set tag");
+
+    QPushButton* button_show_price = new QPushButton(card_details_widget);
+    button_show_price->setText("Show price");
 
     QVBoxLayout* main_layout = new QVBoxLayout(card_details_widget);
     main_layout->addWidget(card_image);
-    main_layout->addWidget(new QLabel(card->details[SIDE_FACE].name, card_details_widget));
-    main_layout->addWidget(new QLabel(card->details[SIDE_FACE].typeLine, card_details_widget));
-    main_layout->addWidget(new QLabel(card->details[SIDE_FACE].manaCost, card_details_widget));
-
-    QPlainTextEdit* card_text = new QPlainTextEdit(card_details_widget);
-    card_text->appendPlainText(card->details[SIDE_FACE].text);
-    card_text->setReadOnly(true);
-    card_text->setSizePolicy(QSizePolicy::Minimum,QSizePolicy::Minimum);
-    main_layout->addWidget(card_text);
-
-    if(card->details[SIDE_FACE].cardType & CARD_TYPE_CREATURE || card->details[SIDE_FACE].cardType & CARD_TYPE_PLANESWALKER )
-        main_layout->addWidget(new QLabel(card->details[SIDE_FACE].stats, card_details_widget));
-
-    main_layout->addWidget(new QLabel(card->rarity, card_details_widget));
-    main_layout->addWidget(new QLabel(card->setName, card_details_widget));
+    main_layout->addWidget(button_flip);
+    main_layout->addWidget(button_set_tag);
+    main_layout->addWidget(button_show_price);
 
     return card_details_widget;
 }

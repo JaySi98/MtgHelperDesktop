@@ -7,7 +7,7 @@
 
 #include <Api/apiconnector.h>
 #include <Views/ViewCardSearch.h>
-#include <card.h>
+#include <Api/Card.h>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }

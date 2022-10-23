@@ -26,3 +26,6 @@ void MainWindow::set_card_serch_view()
 {
     setCentralWidget(view_list.at(0)->get_widget());
 }
+
+// 2. skalowanie obrazka
+// 3. flipowanie obrazka
