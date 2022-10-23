@@ -43,11 +43,12 @@ private:
     QPushButton* button_advanced;
     QGroupBox*   box_card_search;
     QGroupBox*   box_card_info;
-    QScrollArea* info_scroll_area;
     QListWidget* list_widget;
     QLineEdit*   search_line;
 
-    const int image_scale_factor = 450;
+    // QScrollArea* info_scroll_area;
+    QLabel*      card_image;
+
     QSharedPointer<ControllerCardSearch> controller;
     QSharedPointer<QWidget> card_details;
 

@@ -121,7 +121,7 @@ SideInfo JsonParser::GetSideInfo(QJsonObject* jsonObject)
     }
 
     QJsonObject imageLinks = jsonObject->find("image_uris")->toObject();
-    sideInfo.imageUrl = imageLinks.find("normal")->toString();
+    sideInfo.imageUrl = imageLinks.find("border_crop")->toString();
 
     return sideInfo;
 }

@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>900</width>
+    <width>930</width>
     <height>729</height>
    </rect>
   </property>
@@ -18,13 +18,13 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>900</width>
+    <width>930</width>
     <height>729</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>900</width>
+    <width>930</width>
     <height>729</height>
    </size>
   </property>
@@ -32,84 +32,14 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QHBoxLayout" name="horizontalLayout" stretch="4,6">
-    <item>
-     <widget class="QGroupBox" name="boxSearch">
-      <property name="title">
-       <string>Search list</string>
-      </property>
-      <layout class="QHBoxLayout" name="horizontalLayout_4">
-       <item>
-        <layout class="QVBoxLayout" name="verticalLayout_3">
-         <property name="sizeConstraint">
-          <enum>QLayout::SetNoConstraint</enum>
-         </property>
-         <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_2">
-           <item>
-            <widget class="QLineEdit" name="searchLine"/>
-           </item>
-           <item>
-            <widget class="QToolButton" name="buttonSearch">
-             <property name="text">
-              <string>Search</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QPushButton" name="buttonAdvanced">
-             <property name="text">
-              <string>Advanced</string>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </item>
-         <item>
-          <widget class="QListWidget" name="resultList"/>
-         </item>
-        </layout>
-       </item>
-      </layout>
-     </widget>
-    </item>
-    <item>
-     <widget class="QGroupBox" name="boxCardInfo">
-      <property name="enabled">
-       <bool>true</bool>
-      </property>
-      <property name="title">
-       <string>Card info</string>
-      </property>
-      <layout class="QVBoxLayout" name="verticalLayout">
-       <item>
-        <widget class="QScrollArea" name="scrollArea">
-         <property name="widgetResizable">
-          <bool>true</bool>
-         </property>
-         <widget class="QWidget" name="scrollAreaWidgetContents">
-          <property name="geometry">
-           <rect>
-            <x>0</x>
-            <y>0</y>
-            <width>500</width>
-            <height>626</height>
-           </rect>
-          </property>
-         </widget>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-    </item>
-   </layout>
+   <layout class="QHBoxLayout" name="horizontalLayout" stretch=""/>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>900</width>
+     <width>930</width>
      <height>20</height>
     </rect>
    </property>

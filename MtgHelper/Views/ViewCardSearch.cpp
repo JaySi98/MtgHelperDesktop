@@ -47,7 +47,9 @@ void ViewCardSearch::set_card_details(Card* card)
 {
     card_details.clear();
     card_details = QSharedPointer<QWidget>(create_card_details_widget(card));
-    info_scroll_area->setWidget(card_details.get());
+
+    info_layout->addWidget(card_details.get());
+    // info_scroll_area->setWidget(card_details.get());
 }
 
 void ViewCardSearch::create_main_widget()
@@ -70,7 +72,6 @@ void ViewCardSearch::create_main_widget()
     list_widget = new QListWidget(main_widget);
     connect(list_widget, &QListWidget::itemPressed, this, &ViewCardSearch::list_item_pressed);
 
-    info_scroll_area = new QScrollArea(main_widget);
     search_line = new QLineEdit(main_widget);
 
     // layout setup
@@ -86,7 +87,6 @@ void ViewCardSearch::create_main_widget()
     box_card_search->setLayout(list_layout);
 
     info_layout = new QVBoxLayout(main_widget);
-    info_layout->addWidget(info_scroll_area);
     box_card_info->setLayout(info_layout);
 
     central_layout->addWidget(box_card_search);
@@ -96,11 +96,14 @@ void ViewCardSearch::create_main_widget()
 }
 
 QWidget* ViewCardSearch::create_card_details_widget(Card* card)
-{
+{    
     QWidget* card_details_widget = new QWidget;
 
-    QLabel* card_image = new QLabel(card_details_widget);
-    card_image->setPixmap(card->get_image(SIDE_FACE).scaledToWidth(image_scale_factor));
+    card_image = new QLabel(card_details_widget);
+    card_image->setPixmap(card->get_image(SIDE_FACE));
+
+    QScrollArea* info_scroll_area = new QScrollArea(card_details_widget);
+    info_scroll_area->setWidget(card_image);
 
     QPushButton* button_flip = new QPushButton(card_details_widget);
     button_flip->setText("Flip");
@@ -112,7 +115,7 @@ QWidget* ViewCardSearch::create_card_details_widget(Card* card)
     button_show_price->setText("Show price");
 
     QVBoxLayout* main_layout = new QVBoxLayout(card_details_widget);
-    main_layout->addWidget(card_image);
+    main_layout->addWidget(info_scroll_area);
     main_layout->addWidget(button_flip);
     main_layout->addWidget(button_set_tag);
     main_layout->addWidget(button_show_price);
