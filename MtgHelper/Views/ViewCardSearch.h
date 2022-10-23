@@ -47,6 +47,7 @@ private:
     QListWidget* list_widget;
     QLineEdit*   search_line;
 
+    const int image_scale_factor = 450;
     QSharedPointer<ControllerCardSearch> controller;
     QSharedPointer<QWidget> card_details;
 

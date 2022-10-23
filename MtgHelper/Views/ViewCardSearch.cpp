@@ -100,7 +100,7 @@ QWidget* ViewCardSearch::create_card_details_widget(Card* card)
     QWidget* card_details_widget = new QWidget;
 
     QLabel* card_image = new QLabel(card_details_widget);
-    card_image->setPixmap(card->get_image(SIDE_FACE)); //details[SIDE_FACE].image);
+    card_image->setPixmap(card->get_image(SIDE_FACE).scaledToWidth(image_scale_factor));
 
     QPushButton* button_flip = new QPushButton(card_details_widget);
     button_flip->setText("Flip");
