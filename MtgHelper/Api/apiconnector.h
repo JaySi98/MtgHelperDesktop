@@ -34,13 +34,14 @@ public:
 signals:
     void CardListRead(QStringList);
     void CardDetailsRead(Card* card);
-    void CardImageRead(QPixmap image);
+    void CardImageFrontRead(QPixmap image);
+    void CardImageBackRead(QPixmap image);
 
 public slots:
     void SearchCardList(QString query);
     void SearchCardDetails(QString query);
-    void SearchCardImage(QString query);
-
+    void SearchCardFrontImage(QString query);
+    void SearchCardBackImage(QString query);
 
 private slots:
     void ReadyRead();
@@ -48,7 +49,8 @@ private slots:
     void ReplyError(QNetworkReply::NetworkError errorCode);
     void FinishedReadCardList();
     void FinishedReadCardInfo();
-    void FinishedReadCardImage();
+    void FinishedReadCardFrontImage();
+    void FinishedReadCardBackImage();
 
 private:
 

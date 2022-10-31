@@ -33,6 +33,7 @@ public slots:
     
     void set_card_list(QStringList card_list);
     void set_card_details(Card* card);
+    void flip_image();
 
 private:
     QHBoxLayout* central_layout;
@@ -46,11 +47,14 @@ private:
     QListWidget* list_widget;
     QLineEdit*   search_line;
 
-    // QScrollArea* info_scroll_area;
     QLabel*      card_image;
+    QPushButton* button_collection;
+    QPushButton* button_watchlist;
+    QPushButton* button_flip;
 
     QSharedPointer<ControllerCardSearch> controller;
     QSharedPointer<QWidget> card_details;
+    int current_side;
 
     void     create_main_widget();
     QWidget* create_card_details_widget(Card* card);

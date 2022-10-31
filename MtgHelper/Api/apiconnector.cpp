@@ -32,7 +32,7 @@ void APIConnector::SearchCardDetails(QString query)
     connect(reply, &QNetworkReply::errorOccurred, this, &APIConnector::ReplyError);
 }
 
-void APIConnector::SearchCardImage(QString query)
+void APIConnector::SearchCardFrontImage(QString query)
 {
     status = STATUS_NONE;
     currentRequestType = REQUEST_CARD_IMAGE;
@@ -40,7 +40,20 @@ void APIConnector::SearchCardImage(QString query)
     QUrl url = link[REQUEST_CARD_IMAGE].arg(query);
     QNetworkReply* reply = networkManager.get(QNetworkRequest(url));
 
-    connect(reply, &QNetworkReply::finished,      this, &APIConnector::FinishedReadCardImage);
+    connect(reply, &QNetworkReply::finished,      this, &APIConnector::FinishedReadCardFrontImage);
+    connect(reply, &QNetworkReply::readyRead,     this, &APIConnector::ReadyRead);
+    connect(reply, &QNetworkReply::errorOccurred, this, &APIConnector::ReplyError);
+}
+
+void APIConnector::SearchCardBackImage(QString query)
+{
+    status = STATUS_NONE;
+    currentRequestType = REQUEST_CARD_IMAGE;
+
+    QUrl url = link[REQUEST_CARD_IMAGE].arg(query);
+    QNetworkReply* reply = networkManager.get(QNetworkRequest(url));
+
+    connect(reply, &QNetworkReply::finished,      this, &APIConnector::FinishedReadCardBackImage);
     connect(reply, &QNetworkReply::readyRead,     this, &APIConnector::ReadyRead);
     connect(reply, &QNetworkReply::errorOccurred, this, &APIConnector::ReplyError);
 }
@@ -80,12 +93,25 @@ void APIConnector::FinishedReadCardInfo()
     reply->deleteLater();
 }
 
-void APIConnector::FinishedReadCardImage()
+void APIConnector::FinishedReadCardFrontImage()
 {
     if(status == STATUS_OK)
     {
         QPixmap image = JsonParser::GetCardImage(&data);
-        emit CardImageRead(image);
+        emit CardImageFrontRead(image);
+    }
+
+    data.clear();
+    QNetworkReply* reply = qobject_cast<QNetworkReply*>(sender());
+    reply->deleteLater();
+}
+
+void APIConnector::FinishedReadCardBackImage()
+{
+    if(status == STATUS_OK)
+    {
+        QPixmap image = JsonParser::GetCardImage(&data);
+        emit CardImageBackRead(image);
     }
 
     data.clear();

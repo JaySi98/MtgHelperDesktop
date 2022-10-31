@@ -4,6 +4,7 @@ ViewCardSearch::ViewCardSearch(QObject *parent)
     : View{parent}
     , controller(QSharedPointer<ControllerCardSearch>(new ControllerCardSearch()))
     , card_details(nullptr)
+    , current_side(SIDE_FACE)
 {
     connect(controller.get(), &ControllerCardSearch::card_list_fetched,    this,              &ViewCardSearch::set_card_list);
     connect(controller.get(), &ControllerCardSearch::card_details_fetched, this,              &ViewCardSearch::set_card_details);
@@ -46,10 +47,25 @@ void ViewCardSearch::set_card_list(QStringList card_list)
 void ViewCardSearch::set_card_details(Card* card)
 {
     card_details.clear();
+    current_side = SIDE_FACE;
     card_details = QSharedPointer<QWidget>(create_card_details_widget(card));
 
     info_layout->addWidget(card_details.get());
-    // info_scroll_area->setWidget(card_details.get());
+}
+
+void ViewCardSearch::flip_image()
+{
+    if(current_side == SIDE_FACE)
+    {
+        current_side = SIDE_BACK;
+    }
+    else
+    {
+        current_side = SIDE_FACE;
+    }
+
+    QPixmap flip_image = controller->get_card_flip_image(current_side);
+    card_image->setPixmap(flip_image);
 }
 
 void ViewCardSearch::create_main_widget()
@@ -100,25 +116,31 @@ QWidget* ViewCardSearch::create_card_details_widget(Card* card)
     QWidget* card_details_widget = new QWidget;
 
     card_image = new QLabel(card_details_widget);
-    card_image->setPixmap(card->get_image(SIDE_FACE));
+    card_image->setPixmap(card->get_image(current_side));
 
     QScrollArea* info_scroll_area = new QScrollArea(card_details_widget);
     info_scroll_area->setWidget(card_image);
 
-    QPushButton* button_flip = new QPushButton(card_details_widget);
-    button_flip->setText("Flip");
+    button_collection = new QPushButton(card_details_widget);
+    button_collection->setText("Add to collection");
+    connect(button_collection, &QPushButton::pressed, controller.get(), &ControllerCardSearch::add_card_to_collection);
 
-    QPushButton* button_set_tag = new QPushButton(card_details_widget);
-    button_set_tag->setText("Set tag");
-
-    QPushButton* button_show_price = new QPushButton(card_details_widget);
-    button_show_price->setText("Show price");
+    button_watchlist = new QPushButton(card_details_widget);
+    button_watchlist->setText("Add to watchlist");
+    connect(button_watchlist, &QPushButton::pressed, controller.get(), &ControllerCardSearch::add_card_to_watchlist);
 
     QVBoxLayout* main_layout = new QVBoxLayout(card_details_widget);
     main_layout->addWidget(info_scroll_area);
-    main_layout->addWidget(button_flip);
-    main_layout->addWidget(button_set_tag);
-    main_layout->addWidget(button_show_price);
+
+    if(card->isDual)
+    {
+        button_flip = new QPushButton(card_details_widget);
+        button_flip->setText("Flip");
+        connect(button_flip, &QPushButton::pressed, this, &ViewCardSearch::flip_image);
+        main_layout->addWidget(button_flip);
+    }
+    main_layout->addWidget(button_collection);
+    main_layout->addWidget(button_watchlist);
 
     return card_details_widget;
 }
