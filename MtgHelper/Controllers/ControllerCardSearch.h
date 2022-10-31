@@ -7,6 +7,7 @@
 #include <QStringList>
 #include <Api/apiconnector.h>
 #include <Api/Card.h>
+#include <Database/CardTransaction.h>
 
 class ControllerCardSearch : public QObject
 {

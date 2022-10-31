@@ -64,12 +64,16 @@ void ControllerCardSearch::set_card_back_image(QPixmap image)
 
 void ControllerCardSearch::add_card_to_collection()
 {
-    // TODO
+    //TODO
+    CardTransaction transaction;
+    transaction.save_card_collection(current_card);
 }
 
 void ControllerCardSearch::add_card_to_watchlist()
 {
-    // TODO
+    //TODO
+    CardTransaction transaction;
+    transaction.save_card_watchlist(current_card);
 }
 
 QPixmap ControllerCardSearch::get_card_flip_image(int side)

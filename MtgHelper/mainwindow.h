@@ -6,8 +6,10 @@
 #include <QSharedPointer>
 
 #include <Api/apiconnector.h>
+#include <Database/DatabaseConnector.h>
 #include <Views/ViewCardSearch.h>
 #include <Api/Card.h>
+
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -26,6 +28,7 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
+    DatabaseConnector db_connector;
     QList<QSharedPointer<View>> view_list;
 };
 #endif // MAINWINDOW_H

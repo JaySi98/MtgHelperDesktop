@@ -11,8 +11,8 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets Network REQUIRED)
-find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets Network REQUIRED)
+find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets Network Sql REQUIRED)
+find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets Network Sql REQUIRED)
 
 set(PROJECT_SOURCES
     main.cpp
@@ -27,6 +27,11 @@ set(PROJECT_SOURCES
     Api/Card.h
     Api/Card.cpp
 
+    Database/DatabaseConnector.cpp
+    Database/DatabaseConnector.h
+    Database/CardTransaction.cpp
+    Database/CardTransaction.h
+
     Views/View.h
     Views/View.cpp
     Views/ViewCardSearch.h
@@ -34,8 +39,6 @@ set(PROJECT_SOURCES
 
     Controllers/ControllerCardSearch.h
     Controllers/ControllerCardSearch.cpp
-
-
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
@@ -61,7 +64,7 @@ else()
     endif()
 endif()
 
-target_link_libraries(MtgHelper PRIVATE Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::Network)
+target_link_libraries(MtgHelper PRIVATE Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::Network Qt${QT_VERSION_MAJOR}::Sql)
 
 set_target_properties(MtgHelper PROPERTIES
     MACOSX_BUNDLE_GUI_IDENTIFIER my.example.com

@@ -5,7 +5,9 @@
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
+    , db_connector()
 {
+    db_connector.connect_database();
     view_list = QList<QSharedPointer<View>>
     {
         QSharedPointer<ViewCardSearch>(new ViewCardSearch(this)),
@@ -19,6 +21,7 @@ MainWindow::MainWindow(QWidget *parent)
 
 MainWindow::~MainWindow()
 {
+    db_connector.disconnect_database();
     delete ui;
 }
 
