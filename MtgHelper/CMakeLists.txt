@@ -36,6 +36,8 @@ set(PROJECT_SOURCES
     Views/View.cpp
     Views/ViewCardSearch.h
     Views/ViewCardSearch.cpp
+    Views/ViewWatchlist.h
+    Views/ViewWatchlist.cpp
 
     Controllers/ControllerCardSearch.h
     Controllers/ControllerCardSearch.cpp

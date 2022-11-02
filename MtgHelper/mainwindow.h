@@ -8,6 +8,7 @@
 #include <Api/apiconnector.h>
 #include <Database/DatabaseConnector.h>
 #include <Views/ViewCardSearch.h>
+#include <Views/ViewWatchlist.h>
 #include <Api/Card.h>
 
 
@@ -25,6 +26,7 @@ public:
 
 private slots:
     void set_card_serch_view();
+    void set_watchlist_view();
 
 private:
     Ui::MainWindow *ui;

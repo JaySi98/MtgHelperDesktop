@@ -32,7 +32,7 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QHBoxLayout" name="horizontalLayout" stretch=""/>
+   <layout class="QHBoxLayout" name="horizontalLayout"/>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -48,6 +48,7 @@
      <string>Menu</string>
     </property>
     <addaction name="action_search_cards"/>
+    <addaction name="action_watchlist"/>
    </widget>
    <addaction name="menu_menu"/>
   </widget>
@@ -55,6 +56,11 @@
   <action name="action_search_cards">
    <property name="text">
     <string>Search Cards</string>
+   </property>
+  </action>
+  <action name="action_watchlist">
+   <property name="text">
+    <string>Watchlist</string>
    </property>
   </action>
  </widget>
