@@ -59,6 +59,7 @@ struct Card
     int tcgPlayerID;
     int cardMarketID;
 
+    QString get_name();
     void    set_image(int side, QPixmap image);
     QPixmap get_image(int side);
     QString get_image_url(int side);
